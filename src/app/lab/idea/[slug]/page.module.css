@@ -1,0 +1,255 @@
+.page {
+  background: #f3f2ee;
+  min-height: 100vh;
+}
+
+.shell {
+  padding-top: 30px;
+}
+
+.breadcrumb {
+  margin: 0;
+  font-size: 12px;
+  color: #8590a4;
+  font-family: var(--font-mono);
+}
+
+.title {
+  margin: 18px 0 0;
+  font-size: clamp(42px, 6vw, 84px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  margin: 16px 0 0;
+  color: #5f6980;
+  line-height: 1.8;
+  max-width: 760px;
+  font-size: 16px;
+}
+
+.mainGrid {
+  margin-top: 32px;
+  display: grid;
+  grid-template-columns: 0.9fr 1.3fr;
+  gap: 22px;
+}
+
+.box,
+.commentPanel {
+  border: 1px solid var(--line-strong);
+  background: #fff;
+  border-radius: 0;
+  padding: 16px;
+}
+
+.box h3 {
+  margin: 0;
+  font-size: 43px;
+}
+
+.box ol {
+  margin: 12px 0 0;
+  padding-left: 18px;
+  color: #4f576a;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.voteRows {
+  margin-top: 12px;
+  display: grid;
+  gap: 8px;
+}
+
+.voteRows div {
+  border: 1px solid var(--line);
+  background: var(--panel);
+  height: 34px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+  font-size: 12px;
+  color: #5f6980;
+}
+
+.recruit {
+  margin-top: 14px;
+  background: #0f1a35;
+  color: #fff;
+  padding: 16px;
+}
+
+.recruit h4 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.recruit p {
+  margin: 10px 0;
+  color: #bec6da;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.recruit ul {
+  margin: 0;
+  padding-left: 17px;
+  font-size: 12px;
+  color: #d3dbef;
+  display: grid;
+  gap: 6px;
+}
+
+.recruit a {
+  margin-top: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 40px;
+  background: #1e45c6;
+  color: #fff;
+  font-size: 13px;
+}
+
+.rightCol {
+  border: 1px solid var(--line-strong);
+  background: #fff;
+  padding: 16px;
+}
+
+.discussionHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.discussionHead h3 {
+  margin: 0;
+  font-size: 32px;
+}
+
+.discussionHead a {
+  color: #1e45c6;
+  font-size: 12px;
+}
+
+.stickyBoard {
+  margin-top: 16px;
+  min-height: 380px;
+  border: 1px dashed var(--line-strong);
+  padding: 14px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.sticky1,
+.sticky2,
+.sticky3,
+.sticky4,
+.sticky5 {
+  padding: 12px;
+  min-height: 92px;
+  font-size: 12px;
+  color: #40485b;
+}
+
+.sticky1 {
+  background: #f9efad;
+}
+
+.sticky2 {
+  background: #dbe9fd;
+}
+
+.sticky3 {
+  background: #ecd9f8;
+}
+
+.sticky4 {
+  background: #d7f3de;
+}
+
+.sticky5 {
+  background: #f1dbeb;
+}
+
+.sticky1 p,
+.sticky2 p,
+.sticky3 p,
+.sticky4 p,
+.sticky5 p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.sticky1 span,
+.sticky2 span,
+.sticky3 span,
+.sticky4 span,
+.sticky5 span {
+  display: block;
+  margin-top: 8px;
+  color: #6c7486;
+  font-size: 11px;
+  font-family: var(--font-mono);
+}
+
+.formArea {
+  margin-top: 18px;
+  display: grid;
+  gap: 10px;
+}
+
+.commentPanel {
+  margin-top: 14px;
+}
+
+.commentPanel h4 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.commentList {
+  margin-top: 10px;
+  display: grid;
+  gap: 10px;
+}
+
+.commentList article {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px;
+  background: var(--panel);
+}
+
+.commentList b {
+  font-size: 12px;
+}
+
+.commentList p {
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: #626b7f;
+  line-height: 1.7;
+}
+
+.empty {
+  margin: 0;
+  color: #8b93a5;
+  font-size: 13px;
+}
+
+@media (max-width: 1024px) {
+  .mainGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .stickyBoard {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

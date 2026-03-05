@@ -1,40 +1,66 @@
-# 🚀 JESS.PU 个人网站产品需求与设计架构 (PRD & System Design)
+# JESS.PU 首版实现（Next.js + Payload CMS + PostgreSQL）
 
-欢迎来到 **JESS.PU** 个人独立站的开源规划与设计仓库！✨
+本仓库已从 PRD 文档升级为可运行的端到端首版工程，覆盖：
+- 前台页面：`/`、`/lab`、`/lab/idea/[slug]`、`/ai-experience`、`/analysis`、`/story`、`/subscribe`
+- 后台管理：Payload 原生 `/admin`
+- 公开 API：OTP、订阅、赞助名单、Open Lab、评论、内容流
+- 数据库：PostgreSQL（Payload v3 + `@payloadcms/db-postgres`）
+- 对象存储：Cloudflare R2（`@payloadcms/storage-s3`）
+- 邮件：Resend（OTP）
 
-本仓库秉承着 **“Build in Public（公开构建）”** 的极客理念，完整收录了网站从 0 到 1 的全套产品需求文档 (PRD)、页面交互线框图 (Wireframes) 以及底层技术与 CMS 架构设计。
+## 快速启动
 
----
+1. 安装依赖
+```bash
+npm install
+```
 
-## 📖 仓库内容指南
+2. 配置环境变量
+```bash
+cp .env.example .env
+```
 
-本项目主要包含了所有前期的设计思考、产品定义和极客化视觉规范说明，所有的文档均存放在 [`docs/`](./docs) 目录下。
-为了能够给您提供最平滑的阅读体验，我们将散落的模块设计合并成为了一张宏大的设计蓝图：
+3. 启动开发环境
+```bash
+npm run dev
+```
 
-👉 **[点击这里阅读完整的设计蓝图：`docs/Design.md`](./docs/Design.md)**
+4. 初始化示例数据（可选）
+```bash
+npm run seed
+```
 
-### 📂 核心文档模块
-- **技术与系统架构**：基于 Next.js + Payload CMS 的前后端分离架构，以及无密码认证体系 (OTP) 的数据流向设计。
-- **全局设计规范**：Bento Box（便当盒）视觉风格，高对比度的大色块设计，以及统一的字体体系。
-- **核心交互页面**：
-  - **Home (主页)**：高信息密度的数字仪表盘。
-  - **Open Lab (开放实验室)**：灵感与功能的双轨并行共创社区。
-  - **AI Experiments (AI 实验)**：结论前置的硬核 AI 探索笔记。
-  - **Business Analysis (商业分析)**：严谨且易读的研报流排版。
-  - **My Story (我的故事)**：富文本的数字花园。
+## 常用命令
 
----
+```bash
+npm run dev          # 本地开发
+npm run build        # 生产构建
+npm run start        # 生产启动
+npm run lint         # ESLint
+npm run typecheck    # TypeScript 校验
+npm run test         # Vitest 单测
+npm run payload      # Payload CLI
+npm run payload:types
+npm run payload:importmap
+```
 
-## 🛠️ 技术选型前瞻
+## 部署说明（Railway）
 
-虽然目前此仓库以需求和架构设计文档为主，但未来工程建设的基石已制定：
-- **Frontend**: Next.js (React), Tailwind CSS
-- **Backend/CMS**: Payload CMS
-- **Authentication**: 邮箱 + OTP 无密码静默登录
-- **Deployment**: 独立部署 / Serverless
+- 已包含 `Dockerfile` 与 `railway.json`
+- 在 Railway 中同时挂载应用服务 + PostgreSQL 服务
+- 配置以下关键环境变量：
+  - `DATABASE_URL`
+  - `PAYLOAD_SECRET`
+  - `SESSION_SECRET`
+  - `RESEND_API_KEY`
+  - `RESEND_FROM_EMAIL`
+  - `R2_ACCOUNT_ID`
+  - `R2_ACCESS_KEY_ID`
+  - `R2_SECRET_ACCESS_KEY`
+  - `R2_BUCKET`
+  - `R2_ENDPOINT`
+  - `R2_PUBLIC_URL`
 
----
+## 文档
 
-*“用最极客的方式，展示最真实的独立创造者思考。”*
-
-> 📌 **注**：所有文档均源自我个人的深度思考与规划设计。请根据项目更新日志跟踪站点的后续实质性工程进展。
+产品与设计文档仍保留在 `docs/`，可继续作为迭代基线使用。

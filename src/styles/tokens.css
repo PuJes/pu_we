@@ -1,0 +1,17 @@
+:root {
+  --bg: #f6f7f9;
+  --surface: #ffffff;
+  --panel: #f9fafb;
+  --line: #e7e8eb;
+  --line-strong: #dfe1e5;
+  --text-primary: #1a2233;
+  --text-secondary: #697287;
+  --text-muted: #9ca3af;
+  --blue: #1e45c6;
+  --blue-soft: #eff4ff;
+  --green: #19a16f;
+  --orange: #f97316;
+  --font-display: var(--font-inter-tight), 'Inter', 'PingFang SC', 'Microsoft Yahei', sans-serif;
+  --font-body: var(--font-noto-sc), 'PingFang SC', 'Microsoft Yahei', sans-serif;
+  --font-mono: var(--font-jetbrains), 'SFMono-Regular', Consolas, monospace;
+}

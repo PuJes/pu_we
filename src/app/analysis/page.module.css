@@ -1,0 +1,173 @@
+.hero {
+  border-bottom: 1px solid var(--line);
+}
+
+.heroInner {
+  width: min(1240px, calc(100% - 64px));
+  margin: 0 auto;
+  min-height: 260px;
+  border-left: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 10px;
+}
+
+.heroInner h1 {
+  margin: 0;
+  font-size: clamp(46px, 6vw, 84px);
+  line-height: 1.1;
+}
+
+.heroInner p {
+  margin: 18px 0 0;
+  max-width: 520px;
+  color: #606a7f;
+  line-height: 1.7;
+  font-size: 14px;
+}
+
+.main {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 22px;
+}
+
+.sideTitle {
+  margin: 0;
+  color: #9ea5b4;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+}
+
+.sidebar ul {
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+  color: #727c91;
+  font-size: 13px;
+}
+
+.topicLink {
+  color: #727c91;
+}
+
+.active {
+  color: var(--blue);
+}
+
+.subscribeBox {
+  margin-top: 20px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  padding: 12px;
+}
+
+.subscribeBox p {
+  margin: 0;
+  color: #81899a;
+  font-size: 12px;
+}
+
+.subscribeBox a {
+  margin-top: 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  font-size: 12px;
+}
+
+.content h2 {
+  margin: 0 0 14px;
+  font-size: 26px;
+}
+
+.card {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.meta {
+  margin: 0;
+  color: #a0a8b7;
+  font-size: 11px;
+  font-family: var(--font-mono);
+}
+
+.card h3 {
+  margin: 10px 0 12px;
+  font-size: 42px;
+  line-height: 1.35;
+}
+
+.summary {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+  padding: 10px;
+}
+
+.summary p {
+  margin: 4px 0;
+  color: #697183;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.action {
+  margin-top: 12px;
+  display: inline-flex;
+  font-size: 13px;
+  color: var(--blue);
+}
+
+.emptyState {
+  border: 1px dashed var(--line);
+  border-radius: 10px;
+  background: #fff;
+  padding: 16px;
+}
+
+.emptyState h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.emptyState p {
+  margin: 8px 0 0;
+  color: #6d7688;
+  font-size: 13px;
+}
+
+.emptyActions {
+  margin-top: 12px;
+  display: flex;
+  gap: 12px;
+}
+
+.emptyActions a {
+  font-size: 13px;
+  color: var(--blue);
+}
+
+@media (max-width: 1024px) {
+  .heroInner {
+    width: min(1240px, calc(100% - 32px));
+  }
+
+  .main {
+    grid-template-columns: 1fr;
+  }
+}
