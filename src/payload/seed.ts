@@ -3,6 +3,51 @@ import { getPayload } from 'payload'
 
 type SeedRecord = Record<string, unknown>
 
+const BUILTIN_ADMIN = {
+  username: 'admin',
+  email: 'admin@local.dev',
+  password: 'Lyzx!',
+} as const
+
+async function upsertBuiltinAdmin(payload: Awaited<ReturnType<typeof getPayload>>) {
+  const existing = await payload.find({
+    collection: 'admins',
+    where: {
+      or: [
+        { username: { equals: BUILTIN_ADMIN.username } },
+        { email: { equals: BUILTIN_ADMIN.email } },
+      ],
+    },
+    limit: 1,
+    overrideAccess: true,
+  })
+
+  const data = {
+    username: BUILTIN_ADMIN.username,
+    email: BUILTIN_ADMIN.email,
+    password: BUILTIN_ADMIN.password,
+    role: 'admin' as const,
+  }
+
+  if (existing.totalDocs > 0) {
+    await payload.update({
+      collection: 'admins',
+      id: existing.docs[0].id,
+      data,
+      overrideAccess: true,
+    })
+    return
+  }
+
+  const createArgs = {
+    collection: 'admins',
+    data,
+    overrideAccess: true,
+  } as unknown as Parameters<typeof payload.create>[0]
+
+  await payload.create(createArgs)
+}
+
 async function upsertIdea(payload: Awaited<ReturnType<typeof getPayload>>, data: SeedRecord) {
   const existing = await payload.find({
     collection: 'ideas',
@@ -59,6 +104,7 @@ async function upsertContent(payload: Awaited<ReturnType<typeof getPayload>>, da
 
 async function run() {
   const payload = await getPayload({ config })
+  await upsertBuiltinAdmin(payload)
 
   await upsertIdea(payload, {
     title: '独立开发者订阅管理助手',

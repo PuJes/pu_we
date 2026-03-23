@@ -14,6 +14,8 @@ body {
   background: var(--bg);
   color: var(--text-primary);
   font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 a {
@@ -21,40 +23,51 @@ a {
   text-decoration: none;
 }
 
+/* ── Page Shell ── */
 .page-shell {
-  width: min(1240px, calc(100% - 64px));
+  width: min(1280px, calc(100% - 96px));
   margin: 0 auto;
-  padding: 36px 0 72px;
+  padding: 40px 0 80px;
 }
 
+/* ── Typography Utilities ── */
 .page-title {
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(36px, 4.5vw, 72px);
-  line-height: 1.08;
-  letter-spacing: -0.02em;
+  font-size: clamp(40px, 6vw, 72px);
+  line-height: 1.06;
+  letter-spacing: -0.04em;
 }
 
 .page-subtitle {
   margin: 14px 0 0;
   color: var(--text-secondary);
-  line-height: 1.7;
-  font-size: 15px;
+  line-height: 1.65;
+  font-size: 18px;
 }
 
 .page-caption {
   margin: 0;
   color: var(--text-muted);
   font-size: 12px;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  font-family: var(--font-mono);
+  font-family: var(--font-space), sans-serif;
 }
 
+/* ── Card System ── */
 .section-card {
   border: 1px solid var(--line);
   background: var(--surface);
-  border-radius: 10px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--duration-normal) var(--ease-out),
+    transform var(--duration-normal) var(--ease-out);
+}
+
+.section-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
 }
 
 .thin-title {
@@ -64,11 +77,12 @@ a {
   letter-spacing: -0.01em;
 }
 
+/* ── Small Tag ── */
 .soft-tag {
   display: inline-flex;
   align-items: center;
-  height: 22px;
-  border-radius: 4px;
+  height: 24px;
+  border-radius: var(--radius-sm);
   border: 1px solid var(--line);
   background: var(--panel);
   color: var(--text-secondary);
@@ -77,15 +91,40 @@ a {
   font-family: var(--font-mono);
 }
 
+/* ── Dot Indicator ── */
 .dot {
   width: 6px;
   height: 6px;
   border-radius: 999px;
 }
 
+/* ── Page Fade-in Animation ── */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+main {
+  animation: fadeInUp var(--duration-slow) var(--ease-out) both;
+}
+
+/* ── Focus visible ring (accessibility) ── */
+:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
+/* ── Responsive ── */
 @media (max-width: 900px) {
   .page-shell {
-    width: min(1240px, calc(100% - 32px));
+    width: min(1280px, calc(100% - 32px));
     padding-top: 26px;
   }
 }

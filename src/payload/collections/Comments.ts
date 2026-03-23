@@ -1,6 +1,69 @@
-import type { CollectionConfig } from 'payload'
+import type { CollectionAfterChangeHook, CollectionBeforeChangeHook, CollectionConfig } from 'payload'
 
+import { queueNotifications, resolveUserEmailByRelation } from '../../lib/domain/notifications'
 import { isAdmin } from '../access/isAdmin'
+
+const enrichReviewMetadata: CollectionBeforeChangeHook = ({ data, originalDoc, req }) => {
+  const nextData = { ...(data || {}) } as Record<string, unknown>
+  const nextStatus = nextData.status as string | undefined
+  const prevStatus = originalDoc?.status as string | undefined
+
+  if (!nextStatus || !prevStatus || nextStatus === prevStatus) {
+    return nextData
+  }
+
+  if (nextStatus === 'approved' || nextStatus === 'rejected') {
+    nextData.reviewedAt = new Date().toISOString()
+    const adminId =
+      req.user && typeof req.user === 'object' && 'id' in req.user
+        ? (req.user as { id?: string | number }).id
+        : undefined
+
+    if (adminId) {
+      nextData.reviewedBy = adminId
+    }
+  }
+
+  return nextData
+}
+
+const notifyCommentApproved: CollectionAfterChangeHook = async ({
+  doc,
+  previousDoc,
+  operation,
+  req,
+}) => {
+  if (operation !== 'update') {
+    return doc
+  }
+
+  if (doc.status !== 'approved' || previousDoc?.status === 'approved') {
+    return doc
+  }
+
+  const recipient =
+    (typeof doc.guestEmail === 'string' && doc.guestEmail) ||
+    (await resolveUserEmailByRelation(req.payload, doc.authorUser))
+
+  if (!recipient) {
+    return doc
+  }
+
+  await queueNotifications(req.payload, [
+    {
+      eventType: 'comment_approved',
+      recipientEmail: recipient,
+      targetType: 'comment',
+      targetId: String(doc.id),
+      payload: {
+        targetType: doc.targetType,
+        targetId: doc.targetId,
+      },
+    },
+  ])
+
+  return doc
+}
 
 export const Comments: CollectionConfig = {
   slug: 'comments',
@@ -23,6 +86,10 @@ export const Comments: CollectionConfig = {
     create: () => true,
     update: isAdmin,
     delete: isAdmin,
+  },
+  hooks: {
+    beforeChange: [enrichReviewMetadata],
+    afterChange: [notifyCommentApproved],
   },
   fields: [
     {
@@ -71,6 +138,21 @@ export const Comments: CollectionConfig = {
         { label: 'Rejected', value: 'rejected' },
       ],
       index: true,
+    },
+    {
+      name: 'reviewedAt',
+      type: 'date',
+      index: true,
+    },
+    {
+      name: 'reviewedBy',
+      type: 'relationship',
+      relationTo: 'admins',
+      index: true,
+    },
+    {
+      name: 'reviewReason',
+      type: 'textarea',
     },
     {
       name: 'upvotes',

@@ -54,3 +54,54 @@
 *   **需增加的字段扩展**：
     *   在 `Contents` 集合中，针对此专题的内容增加一个 `takeaways` 字段（Array of Strings 或富文本），专供列表卡片前置渲染核心结论使用。
     *   丰富 `category` 的枚举值，以支撑左侧导航的精确过滤（如 `build-in-public`, `workflow`, `ai-frontier`）。
+
+
+```mermaid
+flowchart LR
+    A["访客进入 /lab"] --> B["浏览 Idea 广场"]
+    B --> C["投票支持某个 Idea"]
+    B --> D["提交新 Idea"]
+    B --> E["进入 Idea 详情页"]
+    E --> F["发表评论"]
+    E --> G["提交 Feature 建议"]
+
+    C --> H["后台记录 voteCount / priorityScore"]
+    D --> I["后台创建 Idea"]
+    F --> J["后台创建 Comment（待审核）"]
+    G --> K["后台创建 Feature（open）"]
+
+    H --> L["运营后台看统一待办"]
+    I --> L
+    J --> L
+    K --> L
+
+    L --> M["Idea 分诊"]
+    M --> N["判断是否推进状态"]
+    N --> N1["pending"]
+    N --> N2["discussing"]
+    N --> N3["approved"]
+    N --> N4["in-progress"]
+    N --> N5["launched"]
+    N --> N6["reviewed"]
+
+    L --> O["评论审核"]
+    O --> O1["approved"]
+    O --> O2["rejected"]
+
+    L --> P["Feature 审核与回复"]
+    P --> P1["open"]
+    P --> P2["planned"]
+    P --> P3["done"]
+
+    N4 --> Q["Builder 记录开发日志"]
+    N5 --> R["上线成果"]
+    R --> S["发布内容文章 / 复盘"]
+    S --> T["回链到原 Idea / Feature"]
+
+    O1 --> U["前台公开显示评论"]
+    P3 --> V["通知相关共创者"]
+    T --> V
+
+    V --> W["形成公开实验室闭环"]
+
+```

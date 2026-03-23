@@ -73,7 +73,7 @@ export async function issueOtpChallenge(payload: Payload, email: string) {
     overrideAccess: true,
   })
 
-  await sendOtpEmail({ email: normalizedEmail, code: otp.code })
+  return sendOtpEmail({ email: normalizedEmail, code: otp.code })
 }
 
 export async function validateOtpChallenge({

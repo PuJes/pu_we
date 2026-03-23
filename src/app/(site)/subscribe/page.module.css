@@ -1,0 +1,318 @@
+.page {
+  padding-top: 36px;
+}
+
+.header {
+  margin-bottom: 24px;
+}
+
+.title {
+  margin: 0;
+  font-size: 52px;
+  line-height: 1.15;
+}
+
+.header p {
+  margin: 14px 0 0;
+  color: #1a1a1a;
+  font-size: 18px;
+}
+
+.topGrid {
+  display: grid;
+  grid-template-columns: 1fr 288px;
+  gap: 18px;
+}
+
+.newsletter,
+.chatCard {
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: #fff;
+  padding: 32px;
+}
+
+.newsletter h2 {
+  margin: 0;
+  font-size: 36px;
+}
+
+.newsletter p {
+  margin: 12px 0 0;
+  color: #6b7280;
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+.subscribeForm {
+  margin-top: 32px;
+  border-top: 1px solid #f3f4f6;
+  padding-top: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.subscribeInput {
+  flex: 1;
+  min-width: 240px;
+  height: 48px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 0 12px;
+  background: #fff;
+}
+
+.subscribeButton {
+  min-width: 192px;
+  border: 0;
+  border-radius: 4px;
+  background: #111827;
+  color: #fff;
+  font-size: 14px;
+}
+
+.subscribeFeedback {
+  margin: 0;
+  width: 100%;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.subscribeFeedback[data-state='success'] {
+  color: #177245;
+}
+
+.subscribeFeedback[data-state='error'] {
+  color: #c0392b;
+}
+
+.newsletter small {
+  margin-top: 10px;
+  display: block;
+  color: #9aa2b2;
+  font-size: 12px;
+}
+
+.chatCard {
+  text-align: center;
+}
+
+.chatCard h3 {
+  margin: 0;
+  font-size: 32px;
+}
+
+.chatCard p {
+  margin: 6px 0 14px;
+  color: #6f788b;
+  font-size: 14px;
+}
+
+.qr {
+  width: 148px;
+  height: 148px;
+  border-radius: 4px;
+  margin: 0 auto;
+  border: 1px solid var(--line);
+  background: #111827;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+}
+
+.chatCard strong {
+  display: inline-flex;
+  margin-top: 14px;
+  height: 34px;
+  padding: 0 12px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #f3f4f6;
+  border-radius: 4px;
+  background: #f9fafb;
+  font-size: 18px;
+}
+
+.chatCard span {
+  display: block;
+  margin-top: 4px;
+  color: #8d95a7;
+  font-size: 12px;
+}
+
+.sponsorBoard {
+  margin-top: 16px;
+  border: 1px solid var(--line);
+  border-radius: 32px;
+  background: #fff;
+  padding: 56px;
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 64px;
+}
+
+.left h2 {
+  margin: 0;
+  font-size: 48px;
+}
+
+.left p {
+  margin: 16px 0;
+  color: #6b7280;
+  line-height: 1.7;
+  font-size: 30px;
+}
+
+.payBtns {
+  display: flex;
+  gap: 12px;
+}
+
+.payBtns button {
+  height: 56px;
+  min-width: 140px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: #fff;
+  font-size: 24px;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.payBtns button:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 16px rgb(0 0 0 / 8%);
+}
+
+.wechatPay {
+  border-color: #22c55e !important;
+  color: #16a34a;
+}
+
+.alipay {
+  border-color: #3b82f6 !important;
+  color: #2563eb;
+}
+
+.payNotice {
+  margin: 12px 0 0;
+  font-size: 13px !important;
+  color: #94a3b8 !important;
+  font-style: italic;
+}
+
+.sponsorEmpty {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: #94a3b8;
+  font-size: 14px;
+  padding: 24px 0;
+}
+
+.sideHead {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.sideHead span {
+  height: 1px;
+  background: #f3f4f6;
+  flex: 1;
+}
+
+.sideTitle {
+  margin: 0;
+  color: #9fa8b8;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+}
+
+.sponsorGrid {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.sponsorItem {
+  height: 48px;
+  border: 1px solid #f9fafb;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 10px;
+  background: rgb(249 250 251 / 30%);
+}
+
+.sponsorItem b {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: #dbeafe;
+  color: #1f4bd1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+}
+
+.sponsorItem span {
+  color: #4b5563;
+  font-size: 14px;
+}
+
+.footer {
+  border-top: 1px solid #e5e7eb;
+  background: #fff;
+  padding: 32px 0;
+}
+
+.footerInner {
+  width: min(1280px, calc(100% - 96px));
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+.footerInner div {
+  display: inline-flex;
+  gap: 24px;
+}
+
+@media (max-width: 1180px) {
+
+  .topGrid,
+  .sponsorBoard {
+    grid-template-columns: 1fr;
+  }
+
+  .sponsorGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .subscribeButton {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .sponsorBoard {
+    padding: 24px;
+  }
+
+  .footerInner {
+    width: min(1280px, calc(100% - 32px));
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+}

@@ -4,6 +4,7 @@ import { z } from 'zod'
 import { handleRouteError } from '@/lib/api/handle-route-error'
 import { parseWithSchema } from '@/lib/api/zod'
 import { getSessionFromRequest, setSessionCookie, signSession } from '@/lib/auth/session'
+import { recordInteractionEvent } from '@/lib/domain/interaction-events'
 import { validateOtpChallenge } from '@/lib/domain/otp-challenges'
 import { upsertFrontendUser } from '@/lib/domain/users'
 import { getPayloadClient } from '@/lib/payload'
@@ -54,6 +55,16 @@ export async function POST(request: NextRequest) {
     })
 
     setSessionCookie(response, token)
+
+    await recordInteractionEvent({
+      payload,
+      event: 'otp_verified',
+      request,
+      userId: String(user.id),
+      targetType: 'auth',
+      targetId: String(user.id),
+    })
+
     return response
   } catch (error) {
     return handleRouteError(error)

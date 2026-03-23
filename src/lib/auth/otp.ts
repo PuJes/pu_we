@@ -14,6 +14,15 @@ export type OtpSendResult = {
   expiresAt: string
 }
 
+export type OtpDeliveryResult =
+  | {
+      mode: 'email'
+    }
+  | {
+      mode: 'mock'
+      code: string
+    }
+
 export function generateOtpCode() {
   return String(randomInt(100000, 999999))
 }
@@ -52,12 +61,15 @@ export async function sendOtpEmail({
 }: {
   email: string
   code: string
-}) {
+}): Promise<OtpDeliveryResult> {
   const env = getEnv()
 
   if (!env.RESEND_API_KEY || !env.RESEND_FROM_EMAIL) {
     console.info(`[OTP MOCK] send ${code} to ${email}`)
-    return
+    return {
+      mode: 'mock',
+      code,
+    }
   }
 
   const resend = new Resend(env.RESEND_API_KEY)
@@ -68,4 +80,8 @@ export async function sendOtpEmail({
     subject: 'Your JESS.PU verification code',
     html: `<p>Your OTP code is <strong>${code}</strong>. It expires in ${OTP_TTL_MINUTES} minutes.</p>`,
   })
+
+  return {
+    mode: 'email',
+  }
 }

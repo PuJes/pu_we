@@ -1,0 +1,211 @@
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.secondaryLink,
+.primaryButton {
+  border-radius: 999px;
+  padding: 10px 16px;
+  font-size: 14px;
+}
+
+.secondaryLink {
+  border: 1px solid rgb(17 24 39 / 0.12);
+  background: #fff;
+  color: #111827;
+}
+
+.primaryButton {
+  border: 0;
+  background: #111827;
+  color: #fff;
+}
+
+.metricGrid,
+.boardGrid,
+.bottomGrid {
+  display: grid;
+  gap: 18px;
+}
+
+.metricGrid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.boardGrid,
+.bottomGrid {
+  margin-top: 18px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.metricCard,
+.panel {
+  border: 1px solid rgb(17 24 39 / 0.08);
+  border-radius: 28px;
+  background: rgb(255 255 255 / 0.86);
+  padding: 22px;
+  box-shadow: 0 20px 60px rgb(148 163 184 / 0.14);
+}
+
+.metricCard small,
+.weeklyGrid small {
+  display: block;
+  color: #6b7280;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.metricCard strong,
+.weeklyGrid strong {
+  display: block;
+  margin-top: 12px;
+  font-size: 44px;
+  line-height: 1;
+}
+
+.metricCard p {
+  margin: 10px 0 0;
+  color: #4b5563;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.metricCard a,
+.panelHead a,
+.quickLinks a {
+  color: #111827;
+  font-size: 14px;
+}
+
+.metricCard a {
+  display: inline-block;
+  margin-top: 14px;
+}
+
+.panelHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.panelHead h2 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.panelHead p {
+  margin: 6px 0 0;
+  color: #4b5563;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.subSection {
+  margin-top: 18px;
+}
+
+.subSection h3 {
+  margin: 0 0 12px;
+  font-size: 17px;
+}
+
+.stack {
+  display: grid;
+  gap: 12px;
+}
+
+.rowCard,
+.emptyCard {
+  border: 1px solid rgb(17 24 39 / 0.08);
+  border-radius: 22px;
+  background: #fff;
+  padding: 16px;
+}
+
+.rowHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.rowHead strong {
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.rowHead span,
+.rowMeta span,
+.funnelStrip span {
+  border: 1px solid rgb(17 24 39 / 0.1);
+  border-radius: 999px;
+  background: #f9fafb;
+  padding: 6px 10px;
+  font-size: 12px;
+  color: #374151;
+}
+
+.rowCard p {
+  margin: 8px 0 0;
+  color: #4b5563;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.rowMeta,
+.funnelStrip,
+.quickLinks {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.emptyCard {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.weeklyGrid {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.weeklyGrid div {
+  border: 1px solid rgb(17 24 39 / 0.08);
+  border-radius: 20px;
+  background: #fff;
+  padding: 16px;
+}
+
+@media (max-width: 1180px) {
+  .metricGrid,
+  .boardGrid,
+  .bottomGrid,
+  .weeklyGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .metricGrid,
+  .boardGrid,
+  .bottomGrid,
+  .weeklyGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .actions,
+  .panelHead {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

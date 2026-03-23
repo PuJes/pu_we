@@ -3,20 +3,35 @@ import { z } from 'zod'
 
 import { ApiRouteError } from '@/lib/api/error'
 import { handleRouteError } from '@/lib/api/handle-route-error'
+import { parseRequestBodyAsObject } from '@/lib/api/body'
 import { parseWithSchema } from '@/lib/api/zod'
 import { getSessionFromRequest } from '@/lib/auth/session'
+import { recordInteractionEvent } from '@/lib/domain/interaction-events'
 import { upsertFrontendUser } from '@/lib/domain/users'
 import { getPayloadClient } from '@/lib/payload'
 
 const subscribeSchema = z.object({
   email: z.string().email().optional(),
-  subscribed: z.boolean().default(true),
+  subscribed: z
+    .union([z.boolean(), z.string()])
+    .transform((value) => {
+      if (typeof value === 'boolean') {
+        return value
+      }
+
+      if (value === 'false' || value === '0') {
+        return false
+      }
+
+      return true
+    })
+    .default(true),
 })
 
 export async function POST(request: NextRequest) {
   try {
     const payload = await getPayloadClient()
-    const body = await request.json()
+    const body = await parseRequestBodyAsObject(request)
     const payloadBody = parseWithSchema(subscribeSchema, body)
     const session = await getSessionFromRequest(request)
 
@@ -31,13 +46,35 @@ export async function POST(request: NextRequest) {
       userId = String(user.id)
     }
 
-    const updated = await payload.update({
+    if (!userId) {
+      throw new ApiRouteError('UNAUTHORIZED', 'Unable to resolve user identity.', 401)
+    }
+
+    const updateArgs = {
       collection: 'users',
-      id: userId as string,
+      id: userId,
       data: {
-        isSubscribed: payloadBody.subscribed,
+        isSubscribed: Boolean(payloadBody.subscribed),
       },
       overrideAccess: true,
+    } as unknown as Parameters<typeof payload.update>[0]
+
+    const updated = (await payload.update(updateArgs)) as {
+      id: string | number
+      email: string
+      isSubscribed?: boolean
+    }
+
+    await recordInteractionEvent({
+      payload,
+      event: 'subscribe_updated',
+      request,
+      userId: session?.userId || userId,
+      targetType: 'subscribe',
+      targetId: String(updated.id),
+      meta: {
+        subscribed: Boolean(updated.isSubscribed),
+      },
     })
 
     return Response.json({

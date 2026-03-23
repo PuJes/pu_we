@@ -1,0 +1,261 @@
+.page {
+  background: #f5f7f8;
+}
+
+.hero {
+  border-bottom: 1px solid var(--line);
+  background: #fff;
+}
+
+.heroInner {
+  width: min(1280px, calc(100% - 96px));
+  margin: 0 auto;
+  min-height: 320px;
+  border-left: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 16px;
+}
+
+.heroInner h1 {
+  margin: 0;
+  font-family: var(--font-serif-sc), var(--font-noto-sc), serif;
+  font-size: clamp(42px, 6vw, 60px);
+  line-height: 1.05;
+}
+
+.heroInner h1 span {
+  display: block;
+  color: #9ca3af;
+  font-weight: 400;
+}
+
+.heroInner p {
+  margin: 16px 0 0;
+  max-width: 540px;
+  color: #4b5563;
+  line-height: 1.7;
+  font-size: 18px;
+}
+
+.main {
+  display: grid;
+  grid-template-columns: 256px 1fr;
+  gap: 64px;
+}
+
+.sideTitle {
+  margin: 0;
+  color: #9ea5b4;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+}
+
+.sidebar ul {
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.topicLink,
+.active {
+  height: 36px;
+  border-radius: 16px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 12px;
+}
+
+.topicLink {
+  color: #727c91;
+}
+
+.active {
+  color: #111827;
+  background: #f3f4f6;
+}
+
+.subscribeBox {
+  margin-top: 24px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #f9fafb;
+  padding: 20px;
+}
+
+.subscribeBox p {
+  margin: 0;
+  color: #81899a;
+  font-size: 12px;
+}
+
+.subscribeBox a {
+  margin-top: 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: 16px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  font-size: 12px;
+}
+
+.sectionTitle {
+  margin: 0 0 16px;
+  font-family: var(--font-serif-sc), sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 12px;
+}
+
+.card {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #fff;
+  padding: 32px;
+  margin-bottom: 20px;
+}
+
+.cardMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ticker {
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  background: #f3f4f6;
+  color: #4b5563;
+  font-size: 10px;
+  font-family: var(--font-space), sans-serif;
+  padding: 4px 10px;
+}
+
+.meta {
+  margin: 0;
+  color: #a0a8b7;
+  font-size: 11px;
+  font-family: var(--font-mono);
+}
+
+.card h3 {
+  margin: 12px 0 14px;
+  font-family: var(--font-serif-sc), var(--font-noto-sc), sans-serif;
+  font-size: clamp(28px, 3vw, 42px);
+  line-height: 1.35;
+}
+
+.summary {
+  border: 1px solid #f3f4f6;
+  border-radius: 16px;
+  background: #f9fafb;
+  padding: 16px;
+}
+
+.summary p {
+  margin: 4px 0;
+  color: #4b5563;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.cardBottom {
+  margin-top: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.action {
+  font-size: 14px;
+  color: #111827;
+}
+
+.tipAction {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.emptyState {
+  border: 1px dashed var(--line);
+  border-radius: 10px;
+  background: #fff;
+  padding: 16px;
+}
+
+.emptyState h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.emptyState p {
+  margin: 8px 0 0;
+  color: #6d7688;
+  font-size: 13px;
+}
+
+.emptyActions {
+  margin-top: 12px;
+  display: flex;
+  gap: 12px;
+}
+
+.emptyActions a {
+  font-size: 13px;
+  color: var(--blue);
+}
+
+.footer {
+  border-top: 1px solid var(--line);
+  background: #fff;
+}
+
+.footerInner {
+  width: min(1280px, calc(100% - 96px));
+  margin: 0 auto;
+  height: 116px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footerInner b {
+  display: block;
+  font-size: 18px;
+  font-family: var(--font-space), sans-serif;
+}
+
+.footerInner span {
+  display: block;
+  margin-top: 6px;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.footerInner div:last-child {
+  display: inline-flex;
+  gap: 24px;
+  color: #9ca3af;
+}
+
+@media (max-width: 1024px) {
+  .heroInner,
+  .footerInner {
+    width: min(1280px, calc(100% - 32px));
+  }
+
+  .main {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}

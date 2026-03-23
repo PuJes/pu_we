@@ -5,6 +5,7 @@ import { ApiRouteError } from '@/lib/api/error'
 import { handleRouteError } from '@/lib/api/handle-route-error'
 import { parseWithSchema } from '@/lib/api/zod'
 import { getSessionFromRequest } from '@/lib/auth/session'
+import { recordInteractionEvent } from '@/lib/domain/interaction-events'
 import { getPayloadClient } from '@/lib/payload'
 
 const createFeatureSchema = z.object({
@@ -39,6 +40,18 @@ export async function POST(request: NextRequest) {
     } as unknown as Parameters<typeof payload.create>[0]
 
     const created = await payload.create(createArgs)
+
+    await recordInteractionEvent({
+      payload,
+      event: 'feature_submitted',
+      request,
+      userId: session.userId,
+      targetType: 'feature',
+      targetId: String(created.id),
+      meta: {
+        ideaId: payloadBody.ideaId,
+      },
+    })
 
     return Response.json({ ok: true, data: created }, { status: 201 })
   } catch (error) {

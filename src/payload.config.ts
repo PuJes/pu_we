@@ -6,6 +6,7 @@ import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { s3Storage } from '@payloadcms/storage-s3'
 import { buildConfig } from 'payload'
 import { zh } from '@payloadcms/translations/languages/zh'
+import sharp from 'sharp'
 
 import { getEnv } from './lib/env'
 import { Admins } from './payload/collections/Admins'
@@ -13,7 +14,9 @@ import { Comments } from './payload/collections/Comments'
 import { Contents } from './payload/collections/Contents'
 import { Features } from './payload/collections/Features'
 import { Ideas } from './payload/collections/Ideas'
+import { InteractionEvents } from './payload/collections/InteractionEvents'
 import { Media } from './payload/collections/Media'
+import { Notifications } from './payload/collections/Notifications'
 import { OtpChallenges } from './payload/collections/OtpChallenges'
 import { Sponsors } from './payload/collections/Sponsors'
 import { Users } from './payload/collections/Users'
@@ -31,6 +34,13 @@ const isR2Ready = Boolean(
 
 export default buildConfig({
   admin: {
+    autoLogin:
+      env.PAYLOAD_AUTO_LOGIN_EMAIL || env.PAYLOAD_AUTO_LOGIN_USERNAME
+        ? {
+            email: env.PAYLOAD_AUTO_LOGIN_EMAIL,
+            username: env.PAYLOAD_AUTO_LOGIN_USERNAME,
+          }
+        : undefined,
     user: Admins.slug,
     importMap: {
       baseDir: dirname,
@@ -47,6 +57,8 @@ export default buildConfig({
     Comments,
     Votes,
     Sponsors,
+    Notifications,
+    InteractionEvents,
   ],
   globals: [SiteSettings],
   db: postgresAdapter({
@@ -66,6 +78,7 @@ export default buildConfig({
     graphQLPlayground: '/payload-api/graphql-playground',
   },
   secret: env.PAYLOAD_SECRET,
+  sharp,
   plugins: [
     s3Storage({
       enabled: isR2Ready,

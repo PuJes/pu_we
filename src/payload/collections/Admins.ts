@@ -5,9 +5,15 @@ import { isAdmin, isAdminRequest } from '../access/isAdmin'
 export const Admins: CollectionConfig = {
   slug: 'admins',
   admin: {
-    useAsTitle: 'email',
+    useAsTitle: 'username',
   },
-  auth: true,
+  auth: {
+    loginWithUsername: {
+      allowEmailLogin: true,
+      requireEmail: false,
+      requireUsername: true,
+    },
+  },
   access: {
     admin: ({ req }) => isAdminRequest(req),
     read: isAdmin,

@@ -4,6 +4,7 @@ import { ApiRouteError } from '@/lib/api/error'
 import { handleRouteError } from '@/lib/api/handle-route-error'
 import { getRequestIP, getRequestUserAgent } from '@/lib/api/request'
 import { getSessionFromRequest } from '@/lib/auth/session'
+import { recordInteractionEvent } from '@/lib/domain/interaction-events'
 import { registerVote } from '@/lib/domain/votes'
 import { getPayloadClient } from '@/lib/payload'
 import { buildUserIdentifier } from '@/lib/security/hash'
@@ -32,8 +33,25 @@ export async function POST(
     })
 
     if (result.duplicated) {
+      await recordInteractionEvent({
+        payload,
+        event: 'idea_vote_duplicate',
+        request,
+        userId: session?.userId,
+        targetType: 'idea',
+        targetId: id,
+      })
       throw new ApiRouteError('DUPLICATE_VOTE', 'You have already voted for this idea.', 409)
     }
+
+    await recordInteractionEvent({
+      payload,
+      event: 'idea_vote_success',
+      request,
+      userId: session?.userId,
+      targetType: 'idea',
+      targetId: id,
+    })
 
     return Response.json({
       ok: true,

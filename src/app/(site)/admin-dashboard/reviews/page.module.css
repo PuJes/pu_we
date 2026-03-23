@@ -1,0 +1,237 @@
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.secondaryLink,
+.filterLink,
+.activeFilter,
+.primaryButton,
+.linkRow a {
+  border-radius: 999px;
+  padding: 10px 16px;
+  font-size: 14px;
+}
+
+.secondaryLink,
+.filterLink,
+.linkRow a {
+  border: 1px solid rgb(17 24 39 / 0.12);
+  background: #fff;
+  color: #111827;
+}
+
+.activeFilter {
+  border: 1px solid #111827;
+  background: #111827;
+  color: #fff;
+}
+
+.filters {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.workspace {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: 340px minmax(0, 1fr) 320px;
+  gap: 18px;
+}
+
+.queuePanel,
+.detailPanel,
+.actionPanel {
+  border: 1px solid rgb(17 24 39 / 0.08);
+  border-radius: 28px;
+  background: rgb(255 255 255 / 0.86);
+  padding: 20px;
+  box-shadow: 0 20px 60px rgb(148 163 184 / 0.14);
+}
+
+.panelHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.panelHead h2,
+.panelHead h3 {
+  margin: 0;
+}
+
+.panelHead span,
+.queueMeta span,
+.heroMeta span,
+.contextItem small {
+  color: #6b7280;
+  font-size: 12px;
+}
+
+.sectionGroup {
+  margin-top: 18px;
+}
+
+.sectionGroup h3 {
+  margin: 0 0 12px;
+  font-size: 17px;
+}
+
+.queueList {
+  display: grid;
+  gap: 12px;
+}
+
+.queueItem,
+.activeQueueItem,
+.heroCard,
+.panelCard,
+.contextItem,
+.emptyState,
+.emptyCanvas {
+  border: 1px solid rgb(17 24 39 / 0.08);
+  border-radius: 24px;
+  background: #fff;
+  padding: 16px;
+}
+
+.activeQueueItem {
+  border-color: #111827;
+  box-shadow: 0 16px 40px rgb(17 24 39 / 0.14);
+}
+
+.queueHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.queueHead strong,
+.heroCard h2 {
+  font-size: 18px;
+  line-height: 1.35;
+}
+
+.queueItem p,
+.heroCard p,
+.contextItem p {
+  margin: 8px 0 0;
+  color: #4b5563;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.queueMeta,
+.heroMeta,
+.linkRow {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.queueMeta span,
+.heroMeta span {
+  border: 1px solid rgb(17 24 39 / 0.1);
+  border-radius: 999px;
+  padding: 6px 10px;
+  background: #f9fafb;
+  color: #374151;
+  font-size: 12px;
+}
+
+.heroCard small {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #6b7280;
+}
+
+.detailPanel {
+  display: grid;
+  gap: 18px;
+}
+
+.contextGrid {
+  margin-top: 14px;
+  display: grid;
+  gap: 12px;
+}
+
+.contextItem strong {
+  display: block;
+  margin-top: 6px;
+  font-size: 16px;
+}
+
+.actionForm {
+  display: grid;
+  gap: 18px;
+}
+
+.formSection {
+  border: 1px solid rgb(17 24 39 / 0.08);
+  border-radius: 24px;
+  background: #fff;
+  padding: 16px;
+  display: grid;
+  gap: 14px;
+}
+
+.formSection h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.formSection label {
+  display: grid;
+  gap: 8px;
+}
+
+.formSection span {
+  color: #374151;
+  font-size: 13px;
+}
+
+.formSection select,
+.formSection textarea {
+  width: 100%;
+  border: 1px solid rgb(17 24 39 / 0.12);
+  border-radius: 16px;
+  background: #f9fafb;
+  color: #111827;
+  padding: 12px 14px;
+  font: inherit;
+}
+
+.primaryButton {
+  border: 0;
+  background: #111827;
+  color: #fff;
+}
+
+.emptyState,
+.emptyCanvas {
+  color: #6b7280;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.emptyCanvas {
+  min-height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 1260px) {
+  .workspace {
+    grid-template-columns: 1fr;
+  }
+}

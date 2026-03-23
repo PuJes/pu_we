@@ -1,53 +1,95 @@
 'use client'
 
-import { FormEvent, useState } from 'react'
+import { FormEvent, useMemo, useState } from 'react'
 
-import styles from '@/components/forms/form.module.css'
+type SubscribeFormProps = {
+  className?: string
+  inputClassName?: string
+  buttonClassName?: string
+  feedbackClassName?: string
+  buttonText?: string
+  successText?: string
+  placeholder?: string
+}
 
-export function SubscribeForm() {
+function mapSubscribeError(code?: string) {
+  if (code === 'UNAUTHORIZED') {
+    return '请填写有效邮箱后再订阅。'
+  }
+
+  if (code === 'INVALID_INPUT') {
+    return '邮箱格式有误，请检查后重试。'
+  }
+
+  if (code === 'RATE_LIMITED') {
+    return '操作太频繁，请稍后再试。'
+  }
+
+  return '订阅失败，请稍后重试。'
+}
+
+export function SubscribeForm({
+  className,
+  inputClassName,
+  buttonClassName,
+  feedbackClassName,
+  buttonText = '立即订阅',
+  successText = '订阅成功，欢迎加入。',
+  placeholder = 'your@email.com',
+}: SubscribeFormProps) {
   const [email, setEmail] = useState('')
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [message, setMessage] = useState('')
-  const [isError, setIsError] = useState(false)
 
-  async function handleSubmit(event: FormEvent) {
+  const disabled = useMemo(() => status === 'loading' || !email.trim(), [email, status])
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
+    setStatus('loading')
     setMessage('')
-    setIsError(false)
 
-    const response = await fetch('/api/subscribe', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, subscribed: true }),
-    })
+    try {
+      const response = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, subscribed: true }),
+      })
 
-    const json = await response.json()
+      const json = await response.json()
 
-    if (!response.ok || !json.ok) {
-      setIsError(true)
-      setMessage(json?.error?.message || '订阅失败')
-      return
+      if (!response.ok || !json.ok) {
+        setStatus('error')
+        setMessage(mapSubscribeError(json?.error?.code))
+        return
+      }
+
+      setStatus('success')
+      setMessage(successText)
+      setEmail('')
+    } catch {
+      setStatus('error')
+      setMessage('网络异常，请稍后重试。')
     }
-
-    setMessage('订阅成功，后续将通过邮件同步更新。')
-    setEmail('')
   }
 
   return (
-    <form className={styles.panel} onSubmit={handleSubmit}>
-      <p className={styles.title}>订阅复盘邮件</p>
+    <form className={className} onSubmit={handleSubmit}>
       <input
-        className={styles.input}
+        className={inputClassName}
+        name="email"
         type="email"
+        placeholder={placeholder}
         value={email}
         onChange={(event) => setEmail(event.target.value)}
-        placeholder="you@example.com"
       />
-      <div className={styles.actions}>
-        <button className={styles.button} type="submit" disabled={!email}>
-          立即订阅
-        </button>
-      </div>
-      {message ? <p className={isError ? styles.error : styles.success}>{message}</p> : null}
+      <button className={buttonClassName} type="submit" disabled={disabled}>
+        {status === 'loading' ? '提交中...' : buttonText}
+      </button>
+      {message ? (
+        <p data-state={status} className={feedbackClassName}>
+          {message}
+        </p>
+      ) : null}
     </form>
   )
 }

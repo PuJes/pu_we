@@ -5,6 +5,7 @@ import { ApiRouteError } from '@/lib/api/error'
 import { handleRouteError } from '@/lib/api/handle-route-error'
 import { parseWithSchema } from '@/lib/api/zod'
 import { getSessionFromRequest } from '@/lib/auth/session'
+import { recordInteractionEvent } from '@/lib/domain/interaction-events'
 import { getPayloadClient } from '@/lib/payload'
 
 const createCommentSchema = z.object({
@@ -19,10 +20,12 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
     const payloadBody = parseWithSchema(createCommentSchema, body)
+    const guestName = payloadBody.guestName?.trim()
+    const guestEmail = payloadBody.guestEmail?.trim().toLowerCase()
 
     const session = await getSessionFromRequest(request)
-    if (!session && !payloadBody.guestName) {
-      throw new ApiRouteError('INVALID_INPUT', 'Guest name is required if not logged in.', 400)
+    if (!session && !guestName) {
+      throw new ApiRouteError('INVALID_INPUT', '未登录评论请先填写昵称。', 400)
     }
 
     const payload = await getPayloadClient()
@@ -34,8 +37,8 @@ export async function POST(request: NextRequest) {
         targetType: payloadBody.targetType,
         targetId: payloadBody.targetId,
         authorUser: authorId && !Number.isNaN(authorId) ? authorId : undefined,
-        guestName: payloadBody.guestName,
-        guestEmail: payloadBody.guestEmail,
+        guestName: session ? undefined : guestName || undefined,
+        guestEmail: session ? undefined : guestEmail || undefined,
         content: payloadBody.content,
         status: 'pending',
         upvotes: 0,
@@ -44,6 +47,19 @@ export async function POST(request: NextRequest) {
     } as unknown as Parameters<typeof payload.create>[0]
 
     const created = await payload.create(createArgs)
+
+    await recordInteractionEvent({
+      payload,
+      event: 'comment_submitted',
+      request,
+      userId: session?.userId,
+      targetType: 'comment',
+      targetId: String(created.id),
+      meta: {
+        targetType: payloadBody.targetType,
+        targetId: payloadBody.targetId,
+      },
+    })
 
     return Response.json({
       ok: true,

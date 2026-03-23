@@ -31,10 +31,10 @@ export const Contents: CollectionConfig = {
         beforeValidate: [
           ({ siblingData, value }) => {
             if (typeof value === 'string' && value.length > 0) {
-              return toSlug(value)
+              return toSlug(value, 'content')
             }
             if (typeof siblingData?.title === 'string') {
-              return toSlug(siblingData.title)
+              return toSlug(siblingData.title, 'content')
             }
             return value
           },
@@ -122,6 +122,22 @@ export const Contents: CollectionConfig = {
     {
       name: 'externalLink',
       type: 'text',
+    },
+    {
+      name: 'sourceIdea',
+      type: 'relationship',
+      relationTo: 'ideas',
+      index: true,
+    },
+    {
+      name: 'sourceFeature',
+      type: 'relationship',
+      relationTo: 'features',
+      index: true,
+    },
+    {
+      name: 'contributorThanks',
+      type: 'textarea',
     },
     {
       name: 'body',

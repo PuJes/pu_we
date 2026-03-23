@@ -5,6 +5,7 @@ import { ApiRouteError } from '@/lib/api/error'
 import { handleRouteError } from '@/lib/api/handle-route-error'
 import { parseWithSchema } from '@/lib/api/zod'
 import { getSessionFromRequest } from '@/lib/auth/session'
+import { recordInteractionEvent } from '@/lib/domain/interaction-events'
 import { getPayloadClient } from '@/lib/payload'
 
 const createIdeaSchema = z.object({
@@ -53,12 +54,14 @@ export async function POST(request: NextRequest) {
     const payloadBody = parseWithSchema(createIdeaSchema, body)
 
     const payload = await getPayloadClient()
+    const authorId = Number(session.userId)
 
     const createArgs = {
       collection: 'ideas',
       data: {
         title: payloadBody.title,
         description: payloadBody.description,
+        author: Number.isNaN(authorId) ? undefined : authorId,
         status: 'pending',
         priorityScore: 0,
         voteCount: 0,
@@ -70,6 +73,20 @@ export async function POST(request: NextRequest) {
     } as unknown as Parameters<typeof payload.create>[0]
 
     const created = await payload.create(createArgs)
+
+    const createdIdea = created as { id: string | number; status?: string }
+
+    await recordInteractionEvent({
+      payload,
+      event: 'idea_submitted',
+      request,
+      userId: session.userId,
+      targetType: 'idea',
+      targetId: String(createdIdea.id),
+      meta: {
+        status: createdIdea.status,
+      },
+    })
 
     return Response.json({ ok: true, data: created }, { status: 201 })
   } catch (error) {

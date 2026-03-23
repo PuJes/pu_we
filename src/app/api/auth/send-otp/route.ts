@@ -4,6 +4,7 @@ import { z } from 'zod'
 import { ApiRouteError } from '@/lib/api/error'
 import { handleRouteError } from '@/lib/api/handle-route-error'
 import { parseWithSchema } from '@/lib/api/zod'
+import { recordInteractionEvent } from '@/lib/domain/interaction-events'
 import { issueOtpChallenge } from '@/lib/domain/otp-challenges'
 import { getPayloadClient } from '@/lib/payload'
 import { enforceRateLimit } from '@/lib/security/rate-limit'
@@ -28,9 +29,27 @@ export async function POST(request: NextRequest) {
     }
 
     const payload = await getPayloadClient()
-    await issueOtpChallenge(payload, payloadBody.email)
+    const delivery = await issueOtpChallenge(payload, payloadBody.email)
 
-    return Response.json({ ok: true, data: { sent: true } })
+    await recordInteractionEvent({
+      payload,
+      event: 'otp_sent',
+      request,
+      targetType: 'auth',
+      meta: {
+        email: payloadBody.email.toLowerCase(),
+      },
+    })
+
+    return Response.json({
+      ok: true,
+      data: {
+        sent: true,
+        deliveryMode: delivery.mode,
+        mockCode:
+          process.env.NODE_ENV !== 'production' && delivery.mode === 'mock' ? delivery.code : undefined,
+      },
+    })
   } catch (error) {
     return handleRouteError(error)
   }

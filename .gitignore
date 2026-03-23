@@ -1,5 +1,6 @@
 node_modules
 .next
+.next.broken
 out
 coverage
 .vscode
@@ -13,3 +14,5 @@ payload-types.ts
 *.tsbuildinfo
 pnpm-lock.yaml
 yarn.lock
+node_modules
+.vercel
