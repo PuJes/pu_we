@@ -1,7 +1,7 @@
 .actions {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .secondaryLink,
@@ -10,8 +10,8 @@
 .primaryButton,
 .linkRow a {
   border-radius: 999px;
-  padding: 10px 16px;
-  font-size: 14px;
+  padding: 10px 14px;
+  font-size: 13px;
 }
 
 .secondaryLink,
@@ -34,21 +34,59 @@
   flex-wrap: wrap;
 }
 
+.searchForm {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.searchInput {
+  min-width: 220px;
+  border: 1px solid rgb(17 24 39 / 0.12);
+  border-radius: 999px;
+  background: #fff;
+  padding: 10px 16px;
+  font: inherit;
+}
+
+.searchButton {
+  border: 1px solid rgb(17 24 39 / 0.12);
+  border-radius: 999px;
+  background: #111827;
+  color: #fff;
+  padding: 10px 16px;
+  font-size: 13px;
+}
+
+.filterGroup {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
 .workspace {
-  margin-top: 18px;
+  margin-top: 16px;
   display: grid;
-  grid-template-columns: 340px minmax(0, 1fr) 320px;
-  gap: 18px;
+  grid-template-columns: 300px minmax(0, 1fr) 300px;
+  gap: 14px;
+  align-items: start;
 }
 
 .queuePanel,
 .detailPanel,
 .actionPanel {
   border: 1px solid rgb(17 24 39 / 0.08);
-  border-radius: 28px;
-  background: rgb(255 255 255 / 0.86);
-  padding: 20px;
-  box-shadow: 0 20px 60px rgb(148 163 184 / 0.14);
+  border-radius: 24px;
+  background: rgb(255 255 255 / 0.88);
+  padding: 18px;
+  box-shadow: 0 22px 56px -46px rgb(148 163 184 / 0.36);
+}
+
+.queuePanel,
+.actionPanel {
+  position: sticky;
+  top: 96px;
 }
 
 .panelHead {
@@ -68,21 +106,21 @@
 .heroMeta span,
 .contextItem small {
   color: #6b7280;
-  font-size: 12px;
+  font-size: 11px;
 }
 
 .sectionGroup {
-  margin-top: 18px;
+  margin-top: 16px;
 }
 
 .sectionGroup h3 {
-  margin: 0 0 12px;
-  font-size: 17px;
+  margin: 0 0 10px;
+  font-size: 16px;
 }
 
 .queueList {
   display: grid;
-  gap: 12px;
+  gap: 10px;
 }
 
 .queueItem,
@@ -93,14 +131,29 @@
 .emptyState,
 .emptyCanvas {
   border: 1px solid rgb(17 24 39 / 0.08);
-  border-radius: 24px;
+  border-radius: 20px;
   background: #fff;
-  padding: 16px;
+  padding: 14px;
 }
 
 .activeQueueItem {
   border-color: #111827;
-  box-shadow: 0 16px 40px rgb(17 24 39 / 0.14);
+  box-shadow: 0 16px 40px -30px rgb(17 24 39 / 0.24);
+}
+
+.queueItem,
+.activeQueueItem {
+  display: flex;
+  gap: 10px;
+}
+
+.queueLink {
+  color: inherit;
+  flex: 1;
+}
+
+.queueCheckbox {
+  margin-top: 4px;
 }
 
 .queueHead {
@@ -112,7 +165,7 @@
 
 .queueHead strong,
 .heroCard h2 {
-  font-size: 18px;
+  font-size: 17px;
   line-height: 1.35;
 }
 
@@ -121,14 +174,14 @@
 .contextItem p {
   margin: 8px 0 0;
   color: #4b5563;
-  font-size: 14px;
-  line-height: 1.7;
+  font-size: 13px;
+  line-height: 1.68;
 }
 
 .queueMeta,
 .heroMeta,
 .linkRow {
-  margin-top: 12px;
+  margin-top: 10px;
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
@@ -136,57 +189,57 @@
 
 .queueMeta span,
 .heroMeta span {
-  border: 1px solid rgb(17 24 39 / 0.1);
+  border: 1px solid rgb(17 24 39 / 0.08);
   border-radius: 999px;
-  padding: 6px 10px;
+  padding: 5px 9px;
   background: #f9fafb;
   color: #374151;
-  font-size: 12px;
+  font-size: 11px;
 }
 
 .heroCard small {
   display: block;
   font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.06em;
+  font-size: 10px;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #6b7280;
 }
 
 .detailPanel {
   display: grid;
-  gap: 18px;
+  gap: 14px;
 }
 
 .contextGrid {
-  margin-top: 14px;
+  margin-top: 12px;
   display: grid;
-  gap: 12px;
+  gap: 10px;
 }
 
 .contextItem strong {
   display: block;
   margin-top: 6px;
-  font-size: 16px;
+  font-size: 15px;
 }
 
 .actionForm {
   display: grid;
-  gap: 18px;
+  gap: 16px;
 }
 
 .formSection {
   border: 1px solid rgb(17 24 39 / 0.08);
-  border-radius: 24px;
+  border-radius: 20px;
   background: #fff;
-  padding: 16px;
+  padding: 14px;
   display: grid;
-  gap: 14px;
+  gap: 12px;
 }
 
 .formSection h3 {
   margin: 0;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .formSection label {
@@ -196,14 +249,14 @@
 
 .formSection span {
   color: #374151;
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .formSection select,
 .formSection textarea {
   width: 100%;
   border: 1px solid rgb(17 24 39 / 0.12);
-  border-radius: 16px;
+  border-radius: 14px;
   background: #f9fafb;
   color: #111827;
   padding: 12px 14px;
@@ -216,15 +269,59 @@
   color: #fff;
 }
 
+.secondaryButton {
+  border: 1px solid rgb(17 24 39 / 0.12);
+  background: #fff;
+  color: #111827;
+  border-radius: 999px;
+  padding: 10px 16px;
+  font-size: 13px;
+}
+
+.checkboxRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.timeline {
+  margin-top: 10px;
+  display: grid;
+  gap: 10px;
+}
+
+.timelineItem {
+  border-left: 2px solid #111827;
+  padding-left: 12px;
+}
+
+.timelineItem small {
+  color: #6b7280;
+  font-size: 11px;
+}
+
+.timelineItem strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 14px;
+}
+
+.timelineItem p {
+  margin: 6px 0 0;
+  color: #4b5563;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
 .emptyState,
 .emptyCanvas {
   color: #6b7280;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1.7;
 }
 
 .emptyCanvas {
-  min-height: 420px;
+  min-height: 360px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -233,5 +330,10 @@
 @media (max-width: 1260px) {
   .workspace {
     grid-template-columns: 1fr;
+  }
+
+  .queuePanel,
+  .actionPanel {
+    position: static;
   }
 }

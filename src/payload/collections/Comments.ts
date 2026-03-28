@@ -155,6 +155,11 @@ export const Comments: CollectionConfig = {
       type: 'textarea',
     },
     {
+      name: 'reviewReasonPublic',
+      type: 'checkbox',
+      defaultValue: false,
+    },
+    {
       name: 'upvotes',
       type: 'number',
       required: true,

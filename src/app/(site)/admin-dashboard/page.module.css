@@ -1,15 +1,15 @@
 .actions {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   flex-wrap: wrap;
 }
 
 .secondaryLink,
 .primaryButton {
   border-radius: 999px;
-  padding: 10px 16px;
-  font-size: 14px;
+  padding: 10px 14px;
+  font-size: 13px;
 }
 
 .secondaryLink {
@@ -26,9 +26,10 @@
 
 .metricGrid,
 .boardGrid,
-.bottomGrid {
+.bottomGrid,
+.insightGrid {
   display: grid;
-  gap: 18px;
+  gap: 14px;
 }
 
 .metricGrid {
@@ -36,18 +37,19 @@
 }
 
 .boardGrid,
-.bottomGrid {
-  margin-top: 18px;
+.bottomGrid,
+.insightGrid {
+  margin-top: 14px;
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .metricCard,
 .panel {
   border: 1px solid rgb(17 24 39 / 0.08);
-  border-radius: 28px;
-  background: rgb(255 255 255 / 0.86);
-  padding: 22px;
-  box-shadow: 0 20px 60px rgb(148 163 184 / 0.14);
+  border-radius: 24px;
+  background: rgb(255 255 255 / 0.88);
+  padding: 18px;
+  box-shadow: 0 22px 56px -46px rgb(148 163 184 / 0.36);
 }
 
 .metricCard small,
@@ -55,36 +57,36 @@
   display: block;
   color: #6b7280;
   font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.06em;
+  font-size: 10px;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 .metricCard strong,
 .weeklyGrid strong {
   display: block;
-  margin-top: 12px;
-  font-size: 44px;
+  margin-top: 10px;
+  font-size: 36px;
   line-height: 1;
 }
 
 .metricCard p {
-  margin: 10px 0 0;
+  margin: 8px 0 0;
   color: #4b5563;
-  font-size: 14px;
-  line-height: 1.7;
+  font-size: 13px;
+  line-height: 1.65;
 }
 
 .metricCard a,
 .panelHead a,
 .quickLinks a {
   color: #111827;
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .metricCard a {
   display: inline-block;
-  margin-top: 14px;
+  margin-top: 12px;
 }
 
 .panelHead {
@@ -96,36 +98,36 @@
 
 .panelHead h2 {
   margin: 0;
-  font-size: 24px;
+  font-size: 22px;
 }
 
 .panelHead p {
   margin: 6px 0 0;
   color: #4b5563;
-  font-size: 14px;
-  line-height: 1.7;
+  font-size: 13px;
+  line-height: 1.68;
 }
 
 .subSection {
-  margin-top: 18px;
+  margin-top: 16px;
 }
 
 .subSection h3 {
-  margin: 0 0 12px;
-  font-size: 17px;
+  margin: 0 0 10px;
+  font-size: 16px;
 }
 
 .stack {
   display: grid;
-  gap: 12px;
+  gap: 10px;
 }
 
 .rowCard,
 .emptyCard {
   border: 1px solid rgb(17 24 39 / 0.08);
-  border-radius: 22px;
+  border-radius: 20px;
   background: #fff;
-  padding: 16px;
+  padding: 14px;
 }
 
 .rowHead {
@@ -136,32 +138,32 @@
 }
 
 .rowHead strong {
-  font-size: 16px;
+  font-size: 15px;
   line-height: 1.4;
 }
 
 .rowHead span,
 .rowMeta span,
 .funnelStrip span {
-  border: 1px solid rgb(17 24 39 / 0.1);
+  border: 1px solid rgb(17 24 39 / 0.08);
   border-radius: 999px;
-  background: #f9fafb;
-  padding: 6px 10px;
-  font-size: 12px;
+  background: #f8fafc;
+  padding: 5px 9px;
+  font-size: 11px;
   color: #374151;
 }
 
 .rowCard p {
   margin: 8px 0 0;
   color: #4b5563;
-  font-size: 14px;
-  line-height: 1.65;
+  font-size: 13px;
+  line-height: 1.62;
 }
 
 .rowMeta,
 .funnelStrip,
 .quickLinks {
-  margin-top: 12px;
+  margin-top: 10px;
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
@@ -169,28 +171,58 @@
 
 .emptyCard {
   color: #6b7280;
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .weeklyGrid {
-  margin-top: 18px;
+  margin-top: 16px;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 12px;
+  gap: 10px;
 }
 
 .weeklyGrid div {
   border: 1px solid rgb(17 24 39 / 0.08);
-  border-radius: 20px;
+  border-radius: 18px;
   background: #fff;
-  padding: 16px;
+  padding: 14px;
+}
+
+.timeline {
+  margin-top: 14px;
+  display: grid;
+  gap: 10px;
+}
+
+.timelineItem {
+  border-left: 2px solid #111827;
+  padding-left: 12px;
+}
+
+.timelineItem small {
+  color: #6b7280;
+  font-size: 11px;
+}
+
+.timelineItem strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 14px;
+}
+
+.timelineItem p {
+  margin: 6px 0 0;
+  color: #4b5563;
+  font-size: 13px;
+  line-height: 1.6;
 }
 
 @media (max-width: 1180px) {
   .metricGrid,
   .boardGrid,
   .bottomGrid,
-  .weeklyGrid {
+  .weeklyGrid,
+  .insightGrid {
     grid-template-columns: 1fr 1fr;
   }
 }
@@ -199,7 +231,8 @@
   .metricGrid,
   .boardGrid,
   .bottomGrid,
-  .weeklyGrid {
+  .weeklyGrid,
+  .insightGrid {
     grid-template-columns: 1fr;
   }
 

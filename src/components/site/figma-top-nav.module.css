@@ -1,29 +1,29 @@
 .header {
   width: 100%;
-  border-bottom: 1px solid #e5e7eb;
-  background: color-mix(in srgb, #ffffff 80%, transparent);
-  backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgb(231 224 214 / 0.82);
+  background: color-mix(in srgb, #ffffff 78%, transparent);
+  backdrop-filter: blur(16px) saturate(1.2);
   position: sticky;
   top: 0;
-  z-index: 20;
+  z-index: 30;
 }
 
 .compact {
-  min-height: 64px;
+  min-height: 60px;
 }
 
 .tall {
-  min-height: 80px;
+  min-height: 72px;
 }
 
 .inner {
-  width: min(1280px, calc(100% - 96px));
+  width: min(1180px, calc(100% - 56px));
   min-height: inherit;
   margin: 0 auto;
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
-  gap: 24px;
+  gap: 20px;
 }
 
 .brandWrap,
@@ -35,61 +35,76 @@
 
 .logo {
   font-family: var(--font-manrope), sans-serif;
-  font-size: 20px;
-  font-weight: 700;
-  color: #111827;
-  letter-spacing: -0.05em;
+  font-size: 18px;
+  font-weight: 800;
+  color: #161925;
+  letter-spacing: -0.055em;
 }
 
 .badge {
-  height: 20px;
-  border-radius: 4px;
-  background: #f3f4f6;
-  color: #6b7280;
+  height: 22px;
+  border-radius: 999px;
+  border: 1px solid rgb(231 224 214 / 0.88);
+  background: rgb(250 247 241 / 0.92);
+  color: #7b8495;
   font-family: var(--font-space), sans-serif;
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: 0.05em;
   display: inline-flex;
   align-items: center;
-  padding: 0 8px;
+  padding: 0 9px;
 }
 
 .nav {
   justify-self: center;
   display: inline-flex;
   align-items: center;
-  gap: 32px;
+  gap: 24px;
 }
 
 .link {
-  color: #666;
-  font-size: 14px;
+  color: #687284;
+  font-size: 13px;
   line-height: 20px;
-  font-weight: 500;
+  font-weight: 600;
+  position: relative;
+  padding: 4px 0;
 }
 
 .active {
-  color: #0429ae;
+  color: var(--blue);
+}
+
+.active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -10px;
+  height: 2px;
+  border-radius: 999px;
+  background: currentColor;
 }
 
 .subscribePill,
 .subscribeOutline {
   justify-self: end;
-  height: 36px;
+  height: 34px;
   border-radius: 999px;
-  border: 1px solid #e5e7eb;
-  font-size: 14px;
+  border: 1px solid rgb(231 224 214 / 0.95);
+  font-size: 13px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0 20px;
-  color: #111827;
+  padding: 0 18px;
+  color: #161925;
+  background: rgb(255 255 255 / 0.8);
 }
 
 .subscribeOutline {
-  border-radius: 4px;
-  border-color: #002fa7;
-  color: #002fa7;
+  border-radius: 999px;
+  border-color: rgb(20 56 198 / 0.24);
+  color: var(--blue);
 }
 
 .ideaLogoIcon {
@@ -111,19 +126,20 @@
 .ideaCta {
   justify-self: end;
   min-width: 96px;
-  height: 36px;
-  background: #0429ae;
+  height: 34px;
+  border-radius: 999px;
+  background: var(--blue);
   color: #fff;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 13px;
+  font-weight: 600;
 }
 
 @media (max-width: 1024px) {
   .inner {
-    width: min(1280px, calc(100% - 32px));
+    width: min(1180px, calc(100% - 24px));
     grid-template-columns: auto auto;
     gap: 12px;
   }

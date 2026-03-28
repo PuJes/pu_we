@@ -1,53 +1,59 @@
 .page {
-  padding-top: 36px;
+  padding-top: 20px;
 }
 
 .header {
-  margin-bottom: 24px;
+  margin-bottom: 20px;
+  max-width: 720px;
 }
 
 .title {
   margin: 0;
-  font-size: 52px;
-  line-height: 1.15;
+  font-size: clamp(40px, 5vw, 58px);
+  line-height: 1.08;
+  letter-spacing: -0.04em;
 }
 
 .header p {
-  margin: 14px 0 0;
-  color: #1a1a1a;
-  font-size: 18px;
+  margin: 12px 0 0;
+  color: var(--text-secondary);
+  font-size: 17px;
+  line-height: 1.72;
 }
 
 .topGrid {
   display: grid;
-  grid-template-columns: 1fr 288px;
-  gap: 18px;
+  grid-template-columns: 1fr 274px;
+  gap: 16px;
 }
 
 .newsletter,
 .chatCard {
-  border: 1px solid var(--line);
-  border-radius: 4px;
-  background: #fff;
-  padding: 32px;
+  border: 1px solid rgb(231 224 214 / 0.92);
+  border-radius: 28px;
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.97), rgb(249 246 240 / 0.95)),
+    #fff;
+  padding: 26px;
+  box-shadow: 0 24px 52px -42px rgb(15 23 42 / 0.18);
 }
 
 .newsletter h2 {
   margin: 0;
-  font-size: 36px;
+  font-size: 32px;
 }
 
 .newsletter p {
   margin: 12px 0 0;
-  color: #6b7280;
-  font-size: 16px;
-  line-height: 1.65;
+  color: var(--text-secondary);
+  font-size: 15px;
+  line-height: 1.72;
 }
 
 .subscribeForm {
-  margin-top: 32px;
-  border-top: 1px solid #f3f4f6;
-  padding-top: 24px;
+  margin-top: 24px;
+  border-top: 1px solid rgb(231 224 214 / 0.8);
+  padding-top: 18px;
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
@@ -57,26 +63,27 @@
   flex: 1;
   min-width: 240px;
   height: 48px;
-  border: 1px solid var(--line);
-  border-radius: 4px;
-  padding: 0 12px;
+  border: 1px solid rgb(221 214 204 / 0.98);
+  border-radius: 16px;
+  padding: 0 14px;
   background: #fff;
 }
 
 .subscribeButton {
-  min-width: 192px;
+  min-width: 188px;
   border: 0;
-  border-radius: 4px;
+  border-radius: 16px;
   background: #111827;
   color: #fff;
   font-size: 14px;
+  font-weight: 700;
 }
 
 .subscribeFeedback {
   margin: 0;
   width: 100%;
   font-size: 12px;
-  color: #6b7280;
+  color: var(--text-secondary);
 }
 
 .subscribeFeedback[data-state='success'] {
@@ -90,7 +97,7 @@
 .newsletter small {
   margin-top: 10px;
   display: block;
-  color: #9aa2b2;
+  color: var(--text-muted);
   font-size: 12px;
 }
 
@@ -100,21 +107,21 @@
 
 .chatCard h3 {
   margin: 0;
-  font-size: 32px;
+  font-size: 28px;
 }
 
 .chatCard p {
-  margin: 6px 0 14px;
-  color: #6f788b;
+  margin: 6px 0 12px;
+  color: var(--text-secondary);
   font-size: 14px;
 }
 
 .qr {
-  width: 148px;
-  height: 148px;
-  border-radius: 4px;
+  width: 146px;
+  height: 146px;
+  border-radius: 18px;
   margin: 0 auto;
-  border: 1px solid var(--line);
+  border: 1px solid rgb(231 224 214 / 0.92);
   background: #111827;
   color: #fff;
   display: flex;
@@ -126,65 +133,64 @@
 .chatCard strong {
   display: inline-flex;
   margin-top: 14px;
-  height: 34px;
-  padding: 0 12px;
+  min-height: 34px;
+  padding: 0 14px;
   align-items: center;
   justify-content: center;
-  border: 1px solid #f3f4f6;
-  border-radius: 4px;
-  background: #f9fafb;
-  font-size: 18px;
+  border: 1px solid rgb(231 224 214 / 0.9);
+  border-radius: 999px;
+  background: rgb(249 246 240 / 0.92);
+  font-size: 16px;
 }
 
 .chatCard span {
   display: block;
   margin-top: 4px;
-  color: #8d95a7;
+  color: var(--text-muted);
   font-size: 12px;
 }
 
 .sponsorBoard {
   margin-top: 16px;
-  border: 1px solid var(--line);
+  border: 1px solid rgb(231 224 214 / 0.92);
   border-radius: 32px;
-  background: #fff;
-  padding: 56px;
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.97), rgb(249 246 240 / 0.95)),
+    #fff;
+  padding: 34px;
   display: grid;
-  grid-template-columns: 1fr 1.4fr;
-  gap: 64px;
+  grid-template-columns: 0.92fr 1.08fr;
+  gap: 36px;
+  box-shadow: 0 24px 52px -42px rgb(15 23 42 / 0.18);
 }
 
 .left h2 {
   margin: 0;
-  font-size: 48px;
+  font-size: 40px;
+  line-height: 1.08;
 }
 
 .left p {
-  margin: 16px 0;
-  color: #6b7280;
-  line-height: 1.7;
-  font-size: 30px;
+  margin: 14px 0;
+  color: var(--text-secondary);
+  line-height: 1.62;
+  font-size: 20px;
 }
 
 .payBtns {
   display: flex;
   gap: 12px;
+  flex-wrap: wrap;
 }
 
 .payBtns button {
-  height: 56px;
-  min-width: 140px;
+  height: 50px;
+  min-width: 128px;
   border-radius: 16px;
-  border: 1px solid var(--line);
+  border: 1px solid rgb(231 224 214 / 0.92);
   background: #fff;
-  font-size: 24px;
+  font-size: 20px;
   cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-.payBtns button:hover {
-  transform: scale(1.03);
-  box-shadow: 0 4px 16px rgb(0 0 0 / 8%);
 }
 
 .wechatPay {
@@ -200,14 +206,13 @@
 .payNotice {
   margin: 12px 0 0;
   font-size: 13px !important;
-  color: #94a3b8 !important;
-  font-style: italic;
+  color: var(--text-muted) !important;
 }
 
 .sponsorEmpty {
   grid-column: 1 / -1;
   text-align: center;
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 14px;
   padding: 24px 0;
 }
@@ -215,38 +220,38 @@
 .sideHead {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 18px;
 }
 
 .sideHead span {
   height: 1px;
-  background: #f3f4f6;
+  background: rgb(231 224 214 / 0.9);
   flex: 1;
 }
 
 .sideTitle {
   margin: 0;
-  color: #9fa8b8;
-  font-size: 12px;
-  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  font-size: 11px;
+  letter-spacing: 0.16em;
 }
 
 .sponsorGrid {
-  margin-top: 24px;
+  margin-top: 22px;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
 }
 
 .sponsorItem {
-  height: 48px;
-  border: 1px solid #f9fafb;
-  border-radius: 12px;
+  min-height: 54px;
+  border: 1px solid rgb(231 224 214 / 0.86);
+  border-radius: 18px;
   display: flex;
   align-items: center;
   gap: 8px;
   padding: 0 10px;
-  background: rgb(249 250 251 / 30%);
+  background: rgb(249 250 251 / 0.3);
 }
 
 .sponsorItem b {
@@ -266,29 +271,7 @@
   font-size: 14px;
 }
 
-.footer {
-  border-top: 1px solid #e5e7eb;
-  background: #fff;
-  padding: 32px 0;
-}
-
-.footerInner {
-  width: min(1280px, calc(100% - 96px));
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: #9ca3af;
-  font-size: 14px;
-}
-
-.footerInner div {
-  display: inline-flex;
-  gap: 24px;
-}
-
 @media (max-width: 1180px) {
-
   .topGrid,
   .sponsorBoard {
     grid-template-columns: 1fr;
@@ -306,13 +289,10 @@
   }
 
   .sponsorBoard {
-    padding: 24px;
+    padding: 22px;
   }
 
-  .footerInner {
-    width: min(1280px, calc(100% - 32px));
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
+  .sponsorGrid {
+    grid-template-columns: 1fr;
   }
 }

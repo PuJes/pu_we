@@ -3,6 +3,7 @@ import Link from 'next/link'
 import AdminShell from './_components/AdminShell'
 import { dispatchPendingNotificationsAction } from './actions'
 import {
+  formatAdminEvent,
   formatDateTime,
   formatFeatureStatus,
   formatIdeaStatus,
@@ -28,12 +29,13 @@ export default async function AdminDashboardPage({ searchParams }: PageProps) {
   const params = (await searchParams) ?? {}
   const notice = getParam(params.notice)
   const tone = getParam(params.tone) === 'error' ? 'error' : 'success'
-  const { triageIdeas, pendingComments, activeFeatures, staleIdeas, inbox, weekly } =
+  const { triageIdeas, pendingComments, activeFeatures, staleIdeas, shippedIdeas, adminActivity, inbox, weekly } =
     await getAdminOverviewData()
 
   return (
     <AdminShell
       active="overview"
+      currentPath="/admin-dashboard"
       title="后台指挥台"
       description="先处理会阻塞公开实验室流转的对象：达阈值的 Idea、待审评论、待采纳功能，以及超时未更新的开发项。"
       notice={notice || undefined}
@@ -217,7 +219,7 @@ export default async function AdminDashboardPage({ searchParams }: PageProps) {
               <h2>周度经营信号</h2>
               <p>快速判断这一周的公开构建是否真的在流动。</p>
             </div>
-            <a href="/api/admin/weekly-report">查看 API 简报</a>
+            <Link href="/admin-dashboard/weekly">查看周度详情</Link>
           </div>
 
           <div className={styles.weeklyGrid}>
@@ -255,6 +257,66 @@ export default async function AdminDashboardPage({ searchParams }: PageProps) {
             ) : null}
             <Link href="/lab">查看公开实验室前台</Link>
           </div>
+        </article>
+      </section>
+
+      <section className={styles.insightGrid}>
+        <article className={styles.panel}>
+          <div className={styles.panelHead}>
+            <div>
+              <h2>本周真实交付</h2>
+              <p>进入 launched / reviewed 的 Idea 与对应成果。</p>
+            </div>
+            <Link href="/admin-dashboard/triage?status=reviewed">查看复盘</Link>
+          </div>
+
+          {shippedIdeas.length > 0 ? (
+            <div className={styles.stack}>
+              {shippedIdeas.map((idea) => (
+                <Link
+                  key={idea.id}
+                  href={`/admin-dashboard/triage?ideaId=${idea.id}`}
+                  className={styles.rowCard}
+                >
+                  <div className={styles.rowHead}>
+                    <strong>{idea.title}</strong>
+                    <span>{formatIdeaStatus(idea.status)}</span>
+                  </div>
+                  <p>{idea.description}</p>
+                  <div className={styles.rowMeta}>
+                    <span>{formatDateTime(idea.updatedAt)}</span>
+                    {idea.targetVersion ? <span>版本 {idea.targetVersion}</span> : null}
+                  </div>
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <div className={styles.emptyCard}>本周还没有新的交付。</div>
+          )}
+        </article>
+
+        <article className={styles.panel}>
+          <div className={styles.panelHead}>
+            <div>
+              <h2>后台操作记录</h2>
+              <p>最近的运营动作，确保没有漏掉关键处理。</p>
+            </div>
+            <Link href="/admin-dashboard/reviews">去审核队列</Link>
+          </div>
+
+          {adminActivity.length > 0 ? (
+            <div className={styles.timeline}>
+              {adminActivity.map((item) => (
+                <div key={item.id} className={styles.timelineItem}>
+                  <small>{formatDateTime(item.createdAt)}</small>
+                  <strong>{formatAdminEvent(item.event)}</strong>
+                  <p>{item.meta?.note ? String(item.meta.note) : '后台已记录此次动作。'}</p>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className={styles.emptyCard}>还没有后台操作记录。</div>
+          )}
         </article>
       </section>
     </AdminShell>

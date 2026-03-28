@@ -1,6 +1,7 @@
 import type { Comment, Content, Feature, Idea } from '@/payload-types'
 import { getAdminInboxSnapshot, getWeeklyOpsSnapshot } from '@/lib/data/queries'
 import { getCommentDisplayName } from '@/lib/domain/comment-authors'
+import { normalizeIdeaPrioritySettings } from '@/lib/domain/idea-priority'
 import { getNextIdeaStatuses, type IdeaStatus } from '@/lib/domain/idea-state-machine'
 import { getPayloadClient } from '@/lib/payload'
 
@@ -8,12 +9,39 @@ export type TriageStatusFilter = 'all' | IdeaStatus
 export type TriageSort = 'priority' | 'latest'
 export type ReviewQueueFilter = 'all' | 'comments' | 'features'
 export type ReviewKind = 'comment' | 'feature'
+export type ReviewUpdatedFilter = 'all' | '24h' | '7d' | 'stale'
+export type ReviewFeatureStatusFilter = 'all' | Feature['status']
+export type ReviewCommentTargetFilter = 'all' | Comment['targetType']
 
 export type ReviewTargetSummary = {
   label: string
   adminHref?: string
   publicHref?: string
   secondary?: string
+}
+
+export type AdminActivityDoc = {
+  id: string | number
+  event: string
+  userId?: string | null
+  targetType?: string | null
+  targetId?: string | null
+  createdAt?: string | null
+  meta?: Record<string, unknown> | null
+}
+
+export type TriagePriorityBreakdown = {
+  weightedVotes: number
+  weightedBusinessValue: number
+  weightedEffortPenalty: number
+  finalScore: number
+  multiplier: number
+  voteCount: number
+}
+
+export type LinkedContentSummary = Content & {
+  sourceIdea?: Content['sourceIdea']
+  sourceFeature?: Content['sourceFeature']
 }
 
 function getIdNumber(value: string | null | undefined) {
@@ -59,6 +87,42 @@ export function parseSelectedId(value: string | null | undefined) {
   return getIdNumber(value)
 }
 
+export function parseSearchQuery(value: string | null | undefined) {
+  if (!value) {
+    return ''
+  }
+
+  return value.trim().slice(0, 100)
+}
+
+export function parseReviewUpdatedFilter(value: string | null | undefined): ReviewUpdatedFilter {
+  if (value === '24h' || value === '7d' || value === 'stale') {
+    return value
+  }
+
+  return 'all'
+}
+
+export function parseReviewFeatureStatusFilter(
+  value: string | null | undefined,
+): ReviewFeatureStatusFilter {
+  if (value === 'open' || value === 'planned' || value === 'done') {
+    return value
+  }
+
+  return 'all'
+}
+
+export function parseReviewCommentTargetFilter(
+  value: string | null | undefined,
+): ReviewCommentTargetFilter {
+  if (value === 'idea' || value === 'content' || value === 'feature') {
+    return value
+  }
+
+  return 'all'
+}
+
 export function formatDateTime(value?: string | null) {
   if (!value) {
     return '待补时间'
@@ -89,6 +153,14 @@ export function formatIdeaStatus(status: IdeaStatus) {
   }
 
   return labels[status]
+}
+
+export function formatBuilderLogVersion(version?: string | null) {
+  if (!version) {
+    return '记录'
+  }
+
+  return /^v/i.test(version) ? version : `v${version}`
 }
 
 export function formatFeatureStatus(status: Feature['status']) {
@@ -125,6 +197,91 @@ export function getIdeaPriorityLabel(idea: Idea) {
 
 export function getCommentAuthor(comment: Comment) {
   return getCommentDisplayName(comment, '已验证用户')
+}
+
+function matchesSearch(haystack: Array<string | null | undefined>, query: string) {
+  if (!query) {
+    return true
+  }
+
+  const normalized = query.toLowerCase()
+  return haystack.some((item) => item?.toLowerCase().includes(normalized))
+}
+
+function relationId(value: unknown) {
+  if (!value) {
+    return null
+  }
+
+  if (typeof value === 'string' || typeof value === 'number') {
+    return String(value)
+  }
+
+  if (typeof value === 'object' && value && 'id' in value) {
+    const maybeId = (value as { id?: string | number }).id
+    if (typeof maybeId === 'string' || typeof maybeId === 'number') {
+      return String(maybeId)
+    }
+  }
+
+  return null
+}
+
+function isWithinUpdatedWindow(value: string | null | undefined, filter: ReviewUpdatedFilter) {
+  if (filter === 'all') {
+    return true
+  }
+
+  if (!value) {
+    return filter === 'stale'
+  }
+
+  const timestamp = new Date(value).getTime()
+  if (Number.isNaN(timestamp)) {
+    return filter === 'stale'
+  }
+
+  const ageMs = Date.now() - timestamp
+  if (filter === '24h') {
+    return ageMs <= 24 * 60 * 60 * 1000
+  }
+
+  if (filter === '7d') {
+    return ageMs <= 7 * 24 * 60 * 60 * 1000
+  }
+
+  return ageMs > 7 * 24 * 60 * 60 * 1000
+}
+
+export function formatAdminEvent(event: string) {
+  const labels: Record<string, string> = {
+    admin_idea_updated: 'Idea 已更新',
+    admin_idea_content_linked: '成果已回链',
+    admin_idea_content_unlinked: '成果回链已取消',
+    admin_comment_reviewed: '评论已审核',
+    admin_feature_updated: '功能建议已处理',
+    admin_notifications_dispatched: '通知已派发',
+    admin_payload_bridge_login: 'Payload 会话已接力',
+    admin_bulk_comments_reviewed: '批量评论审核',
+    admin_bulk_features_updated: '批量功能处理',
+  }
+
+  return labels[event] || event
+}
+
+export function getIdeaPriorityBreakdown(idea: Pick<Idea, 'voteCount' | 'impactScore' | 'effortScore' | 'reusabilityScore' | 'priorityScore'>, settings: { priorityScoreMultiplier: number }): TriagePriorityBreakdown {
+  const weightedVotes = Math.max(0, Math.round((idea.voteCount || 0) * settings.priorityScoreMultiplier))
+  const weightedBusinessValue = (idea.impactScore || 0) * 4 + (idea.reusabilityScore || 0) * 2
+  const weightedEffortPenalty = (idea.effortScore || 0) * 2
+
+  return {
+    weightedVotes,
+    weightedBusinessValue,
+    weightedEffortPenalty,
+    finalScore: idea.priorityScore || Math.max(0, weightedVotes + weightedBusinessValue - weightedEffortPenalty),
+    multiplier: settings.priorityScoreMultiplier,
+    voteCount: idea.voteCount || 0,
+  }
 }
 
 export function getFeatureIdea(feature: Feature) {
@@ -227,8 +384,18 @@ async function resolveCommentTargetSummary(comment: Comment): Promise<ReviewTarg
 export async function getAdminOverviewData() {
   const payload = await getPayloadClient()
   const staleBefore = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()
+  const weeklySince = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()
 
-  const [triageIdeasResult, pendingCommentsResult, activeFeaturesResult, staleIdeasResult, inbox, weekly] =
+  const [
+    triageIdeasResult,
+    pendingCommentsResult,
+    activeFeaturesResult,
+    staleIdeasResult,
+    shippedIdeasResult,
+    adminActivityResult,
+    inbox,
+    weekly,
+  ] =
     await Promise.all([
       payload.find({
         collection: 'ideas',
@@ -277,6 +444,31 @@ export async function getAdminOverviewData() {
         limit: 6,
         overrideAccess: true,
       }),
+      payload.find({
+        collection: 'ideas',
+        where: {
+          and: [
+            {
+              or: [{ status: { equals: 'launched' } }, { status: { equals: 'reviewed' } }],
+            },
+            { updatedAt: { greater_than: weeklySince } },
+          ],
+        },
+        sort: '-updatedAt',
+        limit: 6,
+        overrideAccess: true,
+      }),
+      payload.find({
+        collection: 'interactionEvents',
+        where: {
+          event: {
+            like: 'admin_%',
+          },
+        },
+        sort: '-createdAt',
+        limit: 8,
+        overrideAccess: true,
+      }),
       getAdminInboxSnapshot(),
       getWeeklyOpsSnapshot(),
     ])
@@ -286,6 +478,8 @@ export async function getAdminOverviewData() {
     pendingComments: pendingCommentsResult.docs as Comment[],
     activeFeatures: activeFeaturesResult.docs as Feature[],
     staleIdeas: staleIdeasResult.docs as Idea[],
+    shippedIdeas: shippedIdeasResult.docs as Idea[],
+    adminActivity: adminActivityResult.docs as AdminActivityDoc[],
     inbox,
     weekly,
   }
@@ -295,10 +489,12 @@ export async function getIdeaTriageData({
   ideaId,
   status,
   sort,
+  query,
 }: {
   ideaId: number | null
   status: TriageStatusFilter
   sort: TriageSort
+  query: string
 }) {
   const payload = await getPayloadClient()
 
@@ -317,7 +513,9 @@ export async function getIdeaTriageData({
     overrideAccess: true,
   })
 
-  const ideas = ideasResult.docs as Idea[]
+  const ideas = (ideasResult.docs as Idea[]).filter((item) =>
+    matchesSearch([item.title, item.description, item.slug], query),
+  )
   const selectedIdea = ideas.find((item) => item.id === ideaId) || ideas[0] || null
 
   if (!selectedIdea) {
@@ -327,10 +525,14 @@ export async function getIdeaTriageData({
       relatedFeatures: [] as Feature[],
       relatedComments: [] as Comment[],
       nextStatuses: [] as IdeaStatus[],
+      linkedContents: [] as LinkedContentSummary[],
+      contentOptions: [] as LinkedContentSummary[],
+      adminActivity: [] as AdminActivityDoc[],
+      priorityBreakdown: null as TriagePriorityBreakdown | null,
     }
   }
 
-  const [relatedFeaturesResult, relatedCommentsResult] = await Promise.all([
+  const [relatedFeaturesResult, relatedCommentsResult, allContentsResult, siteSettings, adminActivityResult] = await Promise.all([
     payload.find({
       collection: 'features',
       where: {
@@ -354,15 +556,62 @@ export async function getIdeaTriageData({
       sort: '-createdAt',
       limit: 8,
       overrideAccess: true,
+      depth: 1,
+    }),
+    payload.find({
+      collection: 'contents',
+      sort: '-updatedAt',
+      limit: 50,
+      depth: 1,
+      overrideAccess: true,
+    }),
+    payload.findGlobal({
+      slug: 'siteSettings',
+      overrideAccess: true,
+    }).catch(() => null),
+    payload.find({
+      collection: 'interactionEvents',
+      where: {
+        and: [
+          { event: { like: 'admin_%' } },
+          { targetType: { equals: 'idea' } },
+          { targetId: { equals: String(selectedIdea.id) } },
+        ],
+      },
+      sort: '-createdAt',
+      limit: 8,
+      overrideAccess: true,
     }),
   ])
+
+  const relatedFeatures = relatedFeaturesResult.docs as Feature[]
+  const featureIds = new Set(relatedFeatures.map((item) => String(item.id)))
+  const allContents = allContentsResult.docs as LinkedContentSummary[]
+  const linkedContents = allContents.filter((item) => {
+    const sourceIdeaId = relationId(item.sourceIdea)
+    const sourceFeatureId = relationId(item.sourceFeature)
+    return sourceIdeaId === String(selectedIdea.id) || (sourceFeatureId ? featureIds.has(sourceFeatureId) : false)
+  })
+  const contentOptions = allContents.filter((item) => {
+    const sourceIdeaId = relationId(item.sourceIdea)
+    return !sourceIdeaId || sourceIdeaId === String(selectedIdea.id)
+  })
+  const settings = normalizeIdeaPrioritySettings(
+    siteSettings && typeof siteSettings === 'object' && 'thresholds' in siteSettings
+      ? (siteSettings as { thresholds?: { hotIdeaVoteThreshold?: number; priorityScoreMultiplier?: number } }).thresholds
+      : undefined,
+  )
 
   return {
     ideas,
     selectedIdea,
-    relatedFeatures: relatedFeaturesResult.docs as Feature[],
+    relatedFeatures,
     relatedComments: relatedCommentsResult.docs as Comment[],
     nextStatuses: getNextIdeaStatuses(selectedIdea.status),
+    linkedContents,
+    contentOptions,
+    adminActivity: adminActivityResult.docs as AdminActivityDoc[],
+    priorityBreakdown: getIdeaPriorityBreakdown(selectedIdea, settings),
   }
 }
 
@@ -370,10 +619,18 @@ export async function getReviewQueueData({
   queue,
   kind,
   itemId,
+  query,
+  updated,
+  featureStatus,
+  commentTarget,
 }: {
   queue: ReviewQueueFilter
   kind: ReviewKind | null
   itemId: number | null
+  query: string
+  updated: ReviewUpdatedFilter
+  featureStatus: ReviewFeatureStatusFilter
+  commentTarget: ReviewCommentTargetFilter
 }) {
   const payload = await getPayloadClient()
 
@@ -381,9 +638,14 @@ export async function getReviewQueueData({
     payload.find({
       collection: 'comments',
       where: {
-        status: {
-          equals: 'pending',
-        },
+        and: [
+          {
+            status: {
+              equals: 'pending',
+            },
+          },
+          ...(commentTarget !== 'all' ? [{ targetType: { equals: commentTarget } }] : []),
+        ],
       },
       sort: '-createdAt',
       limit: 20,
@@ -392,7 +654,10 @@ export async function getReviewQueueData({
     payload.find({
       collection: 'features',
       where: {
-        or: [{ status: { equals: 'open' } }, { status: { equals: 'planned' } }],
+        or:
+          featureStatus === 'all'
+            ? [{ status: { equals: 'open' } }, { status: { equals: 'planned' } }]
+            : [{ status: { equals: featureStatus } }],
       },
       sort: '-updatedAt',
       limit: 20,
@@ -401,8 +666,20 @@ export async function getReviewQueueData({
     }),
   ])
 
-  const comments = commentsResult.docs as Comment[]
-  const features = featuresResult.docs as Feature[]
+  const comments = (commentsResult.docs as Comment[]).filter((comment) =>
+    isWithinUpdatedWindow(comment.createdAt, updated) &&
+    matchesSearch(
+      [comment.content, getCommentAuthor(comment), comment.targetType, comment.reviewReason || ''],
+      query,
+    ),
+  )
+  const features = (featuresResult.docs as Feature[]).filter((feature) =>
+    isWithinUpdatedWindow(feature.updatedAt, updated) &&
+    matchesSearch(
+      [feature.content, getFeatureIdeaTitle(feature), feature.builderReply || '', feature.status],
+      query,
+    ),
+  )
   const availableComments = queue === 'features' ? [] : comments
   const availableFeatures = queue === 'comments' ? [] : features
 
@@ -430,6 +707,36 @@ export async function getReviewQueueData({
 
   const selectedCommentTarget =
     selectedKind === 'comment' && selectedComment ? await resolveCommentTargetSummary(selectedComment) : null
+  const selectedActivity =
+    selectedKind === 'comment' && selectedComment
+      ? await payload.find({
+          collection: 'interactionEvents',
+          where: {
+            and: [
+              { event: { like: 'admin_%' } },
+              { targetType: { equals: 'comment' } },
+              { targetId: { equals: String(selectedComment.id) } },
+            ],
+          },
+          sort: '-createdAt',
+          limit: 6,
+          overrideAccess: true,
+        })
+      : selectedKind === 'feature' && selectedFeature
+        ? await payload.find({
+            collection: 'interactionEvents',
+            where: {
+              and: [
+                { event: { like: 'admin_%' } },
+                { targetType: { equals: 'feature' } },
+                { targetId: { equals: String(selectedFeature.id) } },
+              ],
+            },
+            sort: '-createdAt',
+            limit: 6,
+            overrideAccess: true,
+          })
+        : null
 
   return {
     comments: availableComments,
@@ -438,5 +745,6 @@ export async function getReviewQueueData({
     selectedComment,
     selectedFeature,
     selectedCommentTarget,
+    selectedActivity: selectedActivity?.docs as AdminActivityDoc[] | undefined,
   }
 }

@@ -1,17 +1,18 @@
 .footer {
-  border-top: 1px solid var(--line);
-  margin-top: 64px;
-  background: var(--surface);
+  border-top: 1px solid rgb(231 224 214 / 0.82);
+  margin-top: 56px;
+  background: rgb(255 255 255 / 0.62);
+  backdrop-filter: blur(10px);
 }
 
 .inner {
-  width: min(1280px, calc(100% - 96px));
+  width: min(1180px, calc(100% - 56px));
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr auto auto;
   align-items: center;
-  gap: 32px;
-  padding: 28px 0;
+  gap: 28px;
+  padding: 24px 0;
 }
 
 .left {
@@ -23,8 +24,8 @@
 .brand {
   margin: 0;
   font-family: var(--font-display);
-  font-size: 16px;
-  font-weight: 700;
+  font-size: 15px;
+  font-weight: 800;
   letter-spacing: -0.02em;
 }
 
@@ -36,12 +37,13 @@
 
 .nav {
   display: flex;
-  gap: 20px;
+  gap: 18px;
+  flex-wrap: wrap;
 }
 
 .nav a {
   color: var(--text-secondary);
-  font-size: 13px;
+  font-size: 12px;
   transition: color var(--duration-fast) var(--ease-out);
 }
 
@@ -51,7 +53,7 @@
 
 .social {
   display: flex;
-  gap: 16px;
+  gap: 14px;
 }
 
 .social a {
@@ -67,10 +69,10 @@
 
 @media (max-width: 900px) {
   .inner {
-    width: min(1280px, calc(100% - 32px));
+    width: min(1180px, calc(100% - 24px));
     grid-template-columns: 1fr;
     gap: 16px;
-    padding: 24px 0;
+    padding: 20px 0;
   }
 
   .nav {

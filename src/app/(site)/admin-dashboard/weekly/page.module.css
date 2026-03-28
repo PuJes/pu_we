@@ -1,0 +1,189 @@
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.secondaryLink {
+  border-radius: 999px;
+  padding: 10px 14px;
+  font-size: 13px;
+  border: 1px solid rgb(17 24 39 / 0.12);
+  background: #fff;
+  color: #111827;
+}
+
+.metricGrid,
+.panelGrid {
+  display: grid;
+  gap: 14px;
+}
+
+.metricGrid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.panelGrid {
+  margin-top: 14px;
+  grid-template-columns: 0.86fr 1.14fr;
+}
+
+.metricCard,
+.panel {
+  border: 1px solid rgb(17 24 39 / 0.08);
+  border-radius: 24px;
+  background: rgb(255 255 255 / 0.88);
+  padding: 18px;
+  box-shadow: 0 22px 56px -46px rgb(148 163 184 / 0.36);
+}
+
+.metricCard small {
+  display: block;
+  color: #6b7280;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.metricCard strong {
+  display: block;
+  margin-top: 10px;
+  font-size: 26px;
+  line-height: 1.2;
+}
+
+.metricCard p {
+  margin: 8px 0 0;
+  color: #4b5563;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.panelHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.panelHead h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.panelHead p {
+  margin: 6px 0 0;
+  color: #4b5563;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.panelHead a {
+  color: #111827;
+  font-size: 13px;
+}
+
+.funnelGrid {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.funnelGrid div {
+  border: 1px solid rgb(17 24 39 / 0.08);
+  border-radius: 18px;
+  background: #fff;
+  padding: 14px;
+}
+
+.funnelGrid small {
+  display: block;
+  color: #6b7280;
+  font-size: 11px;
+}
+
+.funnelGrid strong {
+  display: block;
+  margin-top: 8px;
+  font-size: 22px;
+}
+
+.stack {
+  margin-top: 14px;
+  display: grid;
+  gap: 10px;
+}
+
+.rowCard,
+.emptyCard {
+  border: 1px solid rgb(17 24 39 / 0.08);
+  border-radius: 20px;
+  background: #fff;
+  padding: 14px;
+}
+
+.rowHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.rowHead strong {
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.rowHead span,
+.rowMeta span {
+  border: 1px solid rgb(17 24 39 / 0.08);
+  border-radius: 999px;
+  background: #f9fafb;
+  padding: 5px 9px;
+  font-size: 11px;
+  color: #374151;
+}
+
+.rowCard p {
+  margin: 8px 0 0;
+  color: #4b5563;
+  font-size: 13px;
+  line-height: 1.62;
+}
+
+.rowMeta {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.emptyCard {
+  color: #6b7280;
+  font-size: 13px;
+}
+
+@media (max-width: 1180px) {
+  .metricGrid,
+  .panelGrid,
+  .funnelGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .metricGrid,
+  .panelGrid,
+  .funnelGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .actions,
+  .panelHead {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

@@ -1,5 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
 import type { Metadata } from 'next'
-import Image from 'next/image'
 import Link from 'next/link'
 
 import { SubscribeForm } from '@/components/forms/SubscribeForm'
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 export const dynamic = 'force-dynamic'
 
-const storyImage = 'https://www.figma.com/api/mcp/asset/8d51a6a4-12a3-4fd7-9c52-8f6a26372b01'
+const storyImage = '/art/story-home-cover.svg'
 
 export default async function HomePage() {
   const { counters, ideas, recentContents } = await getHomeSnapshot()
@@ -36,51 +36,53 @@ export default async function HomePage() {
     <>
       <FigmaTopNav active="home" compact={false} subscribePill={false} />
       <main className="page-shell">
-        <section className={styles.brand}>JESS.PU</section>
+        <section className={styles.heroBoard}>
+          <section className={styles.brand}>JESS.PU</section>
 
-        <section className={styles.valueRow}>
-          <h1 className={styles.slogan}>通过创造实现自由， 通过分享放大价值</h1>
-          <div className={styles.valueCols}>
-            <div className={styles.valueCol}>
-              <p className={styles.label}>🎯 追求</p>
-              <p>
-                <span>创造：</span>做喜欢的事情
-              </p>
-              <p>
-                <span>自由：</span>追求财富自由与精神自由
-              </p>
-              <p>
-                <span>分享：</span>秉承公开与互助原则
-              </p>
+          <section className={styles.valueRow}>
+            <h1 className={styles.slogan}>通过创造实现自由， 通过分享放大价值</h1>
+            <div className={styles.valueCols}>
+              <div className={styles.valueCol}>
+                <p className={styles.label}>🎯 追求</p>
+                <p>
+                  <span>创造：</span>做喜欢的事情
+                </p>
+                <p>
+                  <span>自由：</span>追求财富自由与精神自由
+                </p>
+                <p>
+                  <span>分享：</span>秉承公开与互助原则
+                </p>
+              </div>
+              <div className={styles.valueCol}>
+                <p className={styles.label}>⚙️ 方法论</p>
+                <p>
+                  <span>行动至上：</span>Action speaks louder.
+                </p>
+                <p>
+                  <span>尝试10次法：</span>不要被一次失败吓退
+                </p>
+                <p>
+                  <span>长期主义：</span>做时间的朋友
+                </p>
+              </div>
             </div>
-            <div className={styles.valueCol}>
-              <p className={styles.label}>⚙️ 方法论</p>
-              <p>
-                <span>行动至上：</span>Action speaks louder.
-              </p>
-              <p>
-                <span>尝试10次法：</span>不要被一次失败吓退
-              </p>
-              <p>
-                <span>长期主义：</span>做时间的朋友
-              </p>
-            </div>
-          </div>
-        </section>
+          </section>
 
-        <section className={styles.stats}>
-          <div className={styles.stat}>
-            <i className="dot" style={{ background: 'var(--orange)' }} />
-            {counters.ideas} 个公开实验
-          </div>
-          <div className={styles.stat}>
-            <i className="dot" style={{ background: 'var(--blue)' }} />
-            {counters.ai} 篇 AI 经验
-          </div>
-          <div className={styles.stat}>
-            <i className="dot" style={{ background: 'var(--green)' }} />
-            {counters.analysis} 篇商业洞察
-          </div>
+          <section className={styles.stats}>
+            <div className={styles.stat}>
+              <i className="dot" style={{ background: 'var(--orange)' }} />
+              {counters.ideas} 个公开实验
+            </div>
+            <div className={styles.stat}>
+              <i className="dot" style={{ background: 'var(--blue)' }} />
+              {counters.ai} 篇 AI 经验
+            </div>
+            <div className={styles.stat}>
+              <i className="dot" style={{ background: 'var(--green)' }} />
+              {counters.analysis} 篇商业洞察
+            </div>
+          </section>
         </section>
 
         <section className={styles.engineGrid}>
@@ -149,7 +151,7 @@ export default async function HomePage() {
           </Link>
 
           <Link href="/story" className={`${styles.card} ${styles.storyCard}`}>
-            <Image src={storyImage} alt="story" fill sizes="(max-width:900px) 100vw, 340px" />
+            <img src={storyImage} alt="story" className={styles.storyImage} />
             <div className={styles.overlay}>
               <p>&ldquo;周末去山里放空，断网的两天找回了平静...&rdquo;</p>
               <span>翻阅数字花园 →</span>

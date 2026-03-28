@@ -1,9 +1,8 @@
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
-
 import { getAdminInboxSnapshot, getIdeas, getWeeklyOpsSnapshot, type IdeaDoc } from '@/lib/data/queries'
-import { getSessionFromCookies } from '@/lib/auth/session'
+import { requireAdminFrontendSession } from '@/lib/auth/admin'
 import { getPayloadClient } from '@/lib/payload'
+import { formatBuilderLogVersion } from '../lib'
 
 import styles from './page.module.css'
 
@@ -191,10 +190,7 @@ async function getReviewQueuePreview() {
 }
 
 export default async function AdminDashboardWireframesPage() {
-  const session = await getSessionFromCookies()
-  if (!session || session.role !== 'admin') {
-    redirect('/')
-  }
+  await requireAdminFrontendSession('/admin-dashboard/wireframes')
 
   const [ideas, inbox, weekly, queue] = await Promise.all([
     getIdeas({ sort: 'hot' }),
@@ -496,7 +492,7 @@ export default async function AdminDashboardWireframesPage() {
                     {builderLogs.map((log) => (
                       <div key={`${log.date}-${log.content}`} className={styles.timelineItem}>
                         <small>{formatStamp(log.date)}</small>
-                        <strong>{log.version ? `v${log.version}` : '更新'}</strong>
+                        <strong>{formatBuilderLogVersion(log.version)}</strong>
                         <p>{log.content}</p>
                       </div>
                     ))}

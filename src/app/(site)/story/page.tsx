@@ -1,5 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
 import type { Metadata } from 'next'
-import Image from 'next/image'
 import Link from 'next/link'
 
 import { FigmaTopNav } from '@/components/site/FigmaTopNav'
@@ -16,8 +16,8 @@ export const metadata: Metadata = {
 
 export const dynamic = 'force-dynamic'
 
-const coverA = 'https://www.figma.com/api/mcp/asset/d71d901e-89d5-4e9a-a45d-386fb9993ffa'
-const coverB = 'https://www.figma.com/api/mcp/asset/be6422c3-314a-44d4-b84a-6609251ae965'
+const coverA = '/art/story-cover-a.svg'
+const coverB = '/art/story-cover-b.svg'
 const coverPool = [coverA, coverB]
 
 export default async function StoryPage({
@@ -62,7 +62,7 @@ export default async function StoryPage({
                 {index % 2 === 0 ? (
                   <>
                     <div className={styles.imageWrap}>
-                      <Image src={coverPool[index % coverPool.length]} alt="cover" fill sizes="(max-width: 900px) 100vw, 460px" />
+                      <img src={coverPool[index % coverPool.length]} alt="cover" className={styles.coverImage} />
                     </div>
                     <div className={styles.copy}>
                       <p className={styles.meta}>
@@ -84,7 +84,7 @@ export default async function StoryPage({
                       <Link href={`/post/${item.slug}`}>阅读全文 →</Link>
                     </div>
                     <div className={styles.imageWrap}>
-                      <Image src={coverPool[index % coverPool.length]} alt="cover" fill sizes="(max-width: 900px) 100vw, 460px" />
+                      <img src={coverPool[index % coverPool.length]} alt="cover" className={styles.coverImage} />
                     </div>
                   </>
                 )}

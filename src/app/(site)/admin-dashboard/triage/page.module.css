@@ -9,32 +9,77 @@
 .filterLink,
 .activeFilter,
 .quickLinks a,
-.primaryButton {
+.primaryButton,
+.secondaryButton,
+.ghostButton {
   border-radius: 999px;
   padding: 10px 16px;
   font-size: 14px;
+  transition:
+    transform 140ms ease,
+    background 140ms ease,
+    border-color 140ms ease,
+    color 140ms ease,
+    box-shadow 140ms ease;
 }
 
 .secondaryLink,
 .filterLink,
-.quickLinks a {
+.quickLinks a,
+.secondaryButton,
+.ghostButton {
   border: 1px solid rgb(17 24 39 / 0.12);
   background: #fff;
   color: #111827;
 }
 
-.activeFilter {
+.activeFilter,
+.primaryButton {
   border: 1px solid #111827;
   background: #111827;
   color: #fff;
 }
 
+.secondaryLink:hover,
+.filterLink:hover,
+.activeFilter:hover,
+.quickLinks a:hover,
+.primaryButton:hover,
+.secondaryButton:hover,
+.ghostButton:hover {
+  transform: translateY(-1px);
+}
+
 .filters {
+  display: grid;
+  grid-template-columns: minmax(240px, 340px) minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: center;
+}
+
+.searchForm {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.searchInput {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid rgb(17 24 39 / 0.12);
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.92);
+  padding: 11px 16px;
+  font: inherit;
+}
+
+.searchButton {
+  border: 1px solid rgb(17 24 39 / 0.12);
+  border-radius: 999px;
+  background: #111827;
+  color: #fff;
+  padding: 11px 16px;
+  font-size: 14px;
 }
 
 .filterGroup {
@@ -46,48 +91,82 @@
 .workspace {
   margin-top: 18px;
   display: grid;
-  grid-template-columns: 320px minmax(0, 1fr) 320px;
-  gap: 18px;
+  grid-template-columns: minmax(280px, 320px) minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
 }
 
 .queuePanel,
-.detailPanel,
-.actionPanel {
+.heroCard,
+.panelCard,
+.formCard,
+.foldPanel,
+.formFold,
+.emptyCanvas {
   border: 1px solid rgb(17 24 39 / 0.08);
   border-radius: 28px;
-  background: rgb(255 255 255 / 0.86);
-  padding: 20px;
-  box-shadow: 0 20px 60px rgb(148 163 184 / 0.14);
+  background: rgb(255 255 255 / 0.9);
+  box-shadow: 0 20px 60px rgb(148 163 184 / 0.12);
 }
 
-.panelHead {
+.queuePanel {
+  position: sticky;
+  top: 24px;
+  align-self: start;
+  max-height: calc(100vh - 48px);
+  overflow: auto;
+  padding: 20px;
+}
+
+.queuePanel,
+.canvas,
+.primaryColumn,
+.controlRail {
+  min-width: 0;
+}
+
+.panelHead,
+.formCardHead,
+.queueItemHead,
+.heroHeader,
+.inlineCardHead,
+.inlineRow {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 12px;
+  gap: 14px;
 }
 
 .panelHead h2,
-.panelHead h3 {
+.panelHead h3,
+.formCardHead h3 {
   margin: 0;
 }
 
 .panelHead span,
 .queueMeta span,
 .heroMeta span,
+.timelineItem small,
 .inlineCardHead span,
 .formHint,
-.timelineItem small,
-.metricCard small {
+.summaryItem small,
+.foldHeading small,
+.foldCount,
+.formCardHead small,
+.formCardHead span {
   color: #6b7280;
   font-size: 12px;
 }
 
 .queueList,
 .stack,
-.timeline {
+.timeline,
+.primaryColumn,
+.stickyRail,
+.actionForm,
+.contextStack {
   display: grid;
-  gap: 12px;
+  gap: 14px;
 }
 
 .queueList {
@@ -96,98 +175,213 @@
 
 .queueItem,
 .activeQueueItem,
+.summaryItem,
 .inlineCard,
-.emptyState,
-.emptyCanvas,
-.metricCard,
-.panelCard,
-.heroCard {
+.inlineRow {
   border: 1px solid rgb(17 24 39 / 0.08);
-  border-radius: 24px;
+  border-radius: 22px;
   background: #fff;
+}
+
+.queueItem,
+.activeQueueItem {
   padding: 16px;
 }
 
-.activeQueueItem {
-  border-color: #111827;
-  box-shadow: 0 16px 40px rgb(17 24 39 / 0.14);
+.queueItem {
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.45);
 }
 
-.queueItemHead,
-.inlineCardHead {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 12px;
+.activeQueueItem {
+  border-color: rgb(17 24 39 / 0.42);
+  box-shadow:
+    0 16px 40px rgb(17 24 39 / 0.12),
+    inset 0 1px 0 rgb(255 255 255 / 0.55);
 }
 
 .queueItemHead strong,
-.heroCard h2 {
+.heroIntro h2 {
   font-size: 18px;
   line-height: 1.35;
 }
 
 .queueItem p,
-.heroCard p,
+.heroIntro p,
 .timelineItem p,
-.inlineCard p {
-  margin: 8px 0 0;
+.inlineCard p,
+.emptyState,
+.emptyCanvas,
+.priorityGrid p,
+.inlineRow p {
   color: #4b5563;
   font-size: 14px;
   line-height: 1.7;
 }
 
+.queueItem p {
+  margin: 10px 0 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 .queueMeta,
 .heroMeta,
 .quickLinks {
-  margin-top: 12px;
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
 }
 
-.queueMeta span,
-.heroMeta span {
-  border: 1px solid rgb(17 24 39 / 0.1);
-  border-radius: 999px;
-  padding: 6px 10px;
-  background: #f9fafb;
-  color: #374151;
-  font-size: 12px;
+.queueMeta {
+  margin-top: 14px;
 }
 
-.heroCard small,
-.metricCard small {
+.heroCard {
+  padding: 24px;
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.98), rgb(255 255 255 / 0.88));
+}
+
+.heroIntro small,
+.summaryItem small,
+.formCardHead small {
   display: block;
   font-family: var(--font-mono);
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
-.metricsGrid,
-.contextGrid {
+.heroIntro h2 {
+  margin: 8px 0 0;
+  font-size: clamp(28px, 2.8vw, 38px);
+}
+
+.heroIntro p {
+  margin: 12px 0 0;
+  max-width: 720px;
+}
+
+.heroMeta {
+  justify-content: flex-end;
+  align-content: flex-start;
+}
+
+.heroMeta span,
+.queueMeta span,
+.foldCount {
+  border: 1px solid rgb(17 24 39 / 0.1);
+  background: #f8fafc;
+  color: #374151;
+  padding: 6px 11px;
+  border-radius: 999px;
+}
+
+.summaryStrip {
   margin-top: 18px;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
-}
-
-.metricsGrid {
   grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
 }
 
-.metricCard strong {
+.summaryItem {
+  padding: 16px;
+}
+
+.summaryItem strong {
   display: block;
-  margin-top: 10px;
-  font-size: 22px;
+  margin-top: 8px;
+  font-size: 26px;
+  line-height: 1;
 }
 
-.panelCard {
+.canvas {
+  display: grid;
+  gap: 18px;
+}
+
+.mainGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 380px);
+  gap: 18px;
+  align-items: start;
+}
+
+.panelCard,
+.formCard {
   padding: 18px;
 }
 
-.timeline {
+.priorityGrid {
   margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.priorityGrid div {
+  border: 1px solid rgb(17 24 39 / 0.08);
+  border-radius: 18px;
+  background: #fff;
+  padding: 14px;
+}
+
+.priorityGrid small {
+  color: #6b7280;
+  font-size: 12px;
+}
+
+.priorityGrid strong {
+  display: block;
+  margin-top: 6px;
+  font-size: 20px;
+}
+
+.foldPanel,
+.formFold {
+  overflow: hidden;
+}
+
+.foldSummary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px;
+}
+
+.foldSummary::-webkit-details-marker {
+  display: none;
+}
+
+.foldSummary::after {
+  content: '▾';
+  color: #6b7280;
+  font-size: 14px;
+  line-height: 1;
+  transition: transform 140ms ease;
+}
+
+.foldPanel[open] > .foldSummary::after,
+.formFold[open] > .foldSummary::after {
+  transform: rotate(180deg);
+}
+
+.foldHeading strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 16px;
+}
+
+.foldBody {
+  padding: 0 18px 18px;
+  border-top: 1px solid rgb(17 24 39 / 0.08);
+}
+
+.timeline {
+  padding-top: 4px;
 }
 
 .timelineItem {
@@ -201,62 +395,122 @@
   font-size: 15px;
 }
 
-.actionForm {
+.contextStack {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.inlineCard {
+  padding: 14px;
+}
+
+.inlineCard p {
+  margin: 8px 0 0;
+}
+
+.controlRail {
+  align-self: start;
+}
+
+.stickyRail {
+  position: sticky;
+  top: 24px;
+}
+
+.formCardHead {
+  margin-bottom: 6px;
+}
+
+.formCardHead h3 {
+  margin-top: 6px;
+  font-size: 22px;
+}
+
+.formFields,
+.inlineForm {
   display: grid;
-  gap: 18px;
+  gap: 12px;
 }
 
-.formSection {
-  border: 1px solid rgb(17 24 39 / 0.08);
-  border-radius: 24px;
-  background: #fff;
-  padding: 16px;
+.fieldGrid {
   display: grid;
-  gap: 14px;
+  grid-template-columns: minmax(140px, 180px) minmax(0, 1fr);
+  gap: 12px;
 }
 
-.formSection h3 {
-  margin: 0;
-  font-size: 18px;
+.scoreFieldGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
 }
 
-.formSection label {
+.formFields label,
+.inlineForm label,
+.fieldGrid label,
+.scoreFieldGrid label {
   display: grid;
   gap: 8px;
 }
 
-.formSection span {
+.formFields span,
+.inlineForm span,
+.fieldGrid span,
+.scoreFieldGrid span {
   color: #374151;
   font-size: 13px;
 }
 
-.formSection input,
-.formSection select,
-.formSection textarea {
+.formFields input,
+.formFields select,
+.formFields textarea,
+.inlineForm input,
+.inlineForm select,
+.inlineForm textarea,
+.fieldGrid input,
+.fieldGrid textarea,
+.scoreFieldGrid input {
   width: 100%;
+  min-width: 0;
   border: 1px solid rgb(17 24 39 / 0.12);
   border-radius: 16px;
-  background: #f9fafb;
+  background: #f8fafc;
   color: #111827;
   padding: 12px 14px;
   font: inherit;
 }
 
 .primaryButton {
+  width: 100%;
   border: 0;
-  background: #111827;
-  color: #fff;
+  box-shadow: 0 16px 30px rgb(17 24 39 / 0.16);
+}
+
+.secondaryButton,
+.ghostButton {
+  align-self: start;
 }
 
 .formHint {
-  line-height: 1.6;
+  line-height: 1.65;
+}
+
+.inlineRow {
+  padding: 12px 14px;
+}
+
+.inlineRow strong {
+  display: block;
+  font-size: 14px;
+}
+
+.inlineRow p {
+  margin: 4px 0 0;
+  color: #6b7280;
+  font-size: 12px;
 }
 
 .emptyState,
 .emptyCanvas {
-  color: #6b7280;
-  font-size: 14px;
-  line-height: 1.7;
+  padding: 18px;
 }
 
 .emptyCanvas {
@@ -264,20 +518,58 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
 }
 
-@media (max-width: 1260px) {
-  .workspace,
-  .metricsGrid,
-  .contextGrid {
+@media (max-width: 1500px) {
+  .mainGrid {
     grid-template-columns: 1fr;
+  }
+
+  .stickyRail,
+  .queuePanel {
+    position: static;
+    max-height: none;
   }
 }
 
-@media (max-width: 760px) {
+@media (max-width: 1180px) {
   .filters,
-  .actions {
+  .workspace,
+  .contextStack,
+  .priorityGrid,
+  .summaryStrip {
+    grid-template-columns: 1fr;
+  }
+
+  .queuePanel {
+    order: 1;
+  }
+
+  .canvas {
+    order: 2;
+  }
+}
+
+@media (max-width: 820px) {
+  .actions,
+  .searchForm,
+  .queueItemHead,
+  .heroHeader,
+  .panelHead,
+  .formCardHead,
+  .inlineCardHead,
+  .inlineRow {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .filters {
+    gap: 12px;
+  }
+
+  .scoreFieldGrid,
+  .fieldGrid {
+    grid-template-columns: 1fr;
   }
 }

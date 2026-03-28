@@ -1,21 +1,21 @@
 :root {
   /* ── Surfaces ── */
-  --bg: #f5f7f8;
+  --bg: #f6f3ee;
   --surface: #ffffff;
-  --panel: #f8fafc;
+  --panel: #f8f5ef;
 
   /* ── Borders ── */
-  --line: #e5e7eb;
-  --line-strong: #d7dce4;
+  --line: #e7e0d6;
+  --line-strong: #d6cec1;
 
   /* ── Typography ── */
-  --text-primary: #111827;
-  --text-secondary: #64748b;
-  --text-muted: #94a3b8;
+  --text-primary: #161925;
+  --text-secondary: #5f6676;
+  --text-muted: #8b95a7;
 
   /* ── Accent Palette ── */
-  --blue: #0429ae;
-  --blue-soft: #eff6ff;
+  --blue: #1438c6;
+  --blue-soft: #eef3ff;
   --green: #10b981;
   --green-soft: #ecfdf5;
   --orange: #f97316;

@@ -1,15 +1,15 @@
 import type { ReactNode } from 'react'
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
 
-import { getSessionFromCookies } from '@/lib/auth/session'
+import { requireAdminFrontendSession } from '@/lib/auth/admin'
 
 import styles from './admin-shell.module.css'
 
-type AdminSection = 'overview' | 'triage' | 'reviews' | 'wireframes'
+type AdminSection = 'overview' | 'triage' | 'reviews' | 'weekly' | 'wireframes'
 
 type AdminShellProps = {
   active: AdminSection
+  currentPath: string
   title: string
   description: string
   notice?: string
@@ -22,11 +22,13 @@ const navItems: Array<{ key: AdminSection; label: string; caption: string; href:
   { key: 'overview', label: '指挥台', caption: '统一待办', href: '/admin-dashboard' },
   { key: 'triage', label: 'Idea 分诊', caption: '推进状态', href: '/admin-dashboard/triage' },
   { key: 'reviews', label: '审核队列', caption: '评论与功能', href: '/admin-dashboard/reviews' },
+  { key: 'weekly', label: '周度信号', caption: '经营节奏', href: '/admin-dashboard/weekly' },
   { key: 'wireframes', label: '线框参考', caption: '结构稿', href: '/admin-dashboard/wireframes' },
 ]
 
 export default async function AdminShell({
   active,
+  currentPath,
   title,
   description,
   notice,
@@ -34,10 +36,7 @@ export default async function AdminShell({
   actions,
   children,
 }: AdminShellProps) {
-  const session = await getSessionFromCookies()
-  if (!session || session.role !== 'admin') {
-    redirect('/')
-  }
+  const session = await requireAdminFrontendSession(currentPath)
 
   return (
     <main className={styles.page}>

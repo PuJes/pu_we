@@ -1,28 +1,31 @@
 .page {
-  background: #f5f7f8;
+  background: transparent;
 }
 
 .hero {
-  border-bottom: 1px solid var(--line);
-  background: #fff;
+  border: 1px solid rgb(231 224 214 / 0.92);
+  border-radius: 30px;
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.98), rgb(249 246 240 / 0.95)),
+    #fff;
+  box-shadow: 0 28px 64px -44px rgb(15 23 42 / 0.2);
 }
 
 .heroInner {
-  width: min(1280px, calc(100% - 96px));
+  width: min(1180px, calc(100% - 56px));
   margin: 0 auto;
-  min-height: 320px;
-  border-left: 1px solid var(--line);
+  min-height: 240px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-left: 16px;
+  padding: 0 6px;
 }
 
 .heroInner h1 {
   margin: 0;
   font-family: var(--font-serif-sc), var(--font-noto-sc), serif;
-  font-size: clamp(42px, 6vw, 60px);
-  line-height: 1.05;
+  font-size: clamp(38px, 5vw, 56px);
+  line-height: 1.02;
 }
 
 .heroInner h1 span {
@@ -32,24 +35,37 @@
 }
 
 .heroInner p {
-  margin: 16px 0 0;
-  max-width: 540px;
-  color: #4b5563;
-  line-height: 1.7;
-  font-size: 18px;
+  margin: 14px 0 0;
+  max-width: 580px;
+  color: var(--text-secondary);
+  line-height: 1.72;
+  font-size: 17px;
 }
 
 .main {
   display: grid;
-  grid-template-columns: 256px 1fr;
-  gap: 64px;
+  grid-template-columns: 220px 1fr;
+  gap: 30px;
+  align-items: start;
+}
+
+.sidebar {
+  position: sticky;
+  top: 92px;
+  border: 1px solid rgb(231 224 214 / 0.92);
+  border-radius: 24px;
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.97), rgb(249 246 240 / 0.95)),
+    #fff;
+  padding: 18px;
+  box-shadow: 0 24px 52px -42px rgb(15 23 42 / 0.18);
 }
 
 .sideTitle {
   margin: 0;
-  color: #9ea5b4;
-  font-size: 12px;
-  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  font-size: 11px;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   font-family: var(--font-mono);
 }
@@ -65,41 +81,43 @@
 
 .topicLink,
 .active {
-  height: 36px;
-  border-radius: 16px;
+  min-height: 36px;
+  border-radius: 999px;
   display: inline-flex;
   align-items: center;
   padding: 0 12px;
 }
 
 .topicLink {
-  color: #727c91;
+  color: var(--text-secondary);
 }
 
 .active {
-  color: #111827;
-  background: #f3f4f6;
+  color: var(--text-primary);
+  background: rgb(246 241 233 / 0.94);
+  border: 1px solid rgb(231 224 214 / 0.86);
 }
 
 .subscribeBox {
-  margin-top: 24px;
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  background: #f9fafb;
-  padding: 20px;
+  margin-top: 18px;
+  border: 1px solid rgb(231 224 214 / 0.92);
+  border-radius: 18px;
+  background: rgb(255 255 255 / 0.82);
+  padding: 18px;
 }
 
 .subscribeBox p {
   margin: 0;
-  color: #81899a;
+  color: var(--text-secondary);
   font-size: 12px;
+  line-height: 1.65;
 }
 
 .subscribeBox a {
   margin-top: 10px;
   border: 1px solid var(--line-strong);
-  border-radius: 16px;
-  height: 34px;
+  border-radius: 14px;
+  height: 36px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -110,19 +128,22 @@
 .sectionTitle {
   margin: 0 0 16px;
   font-family: var(--font-serif-sc), sans-serif;
-  font-size: 14px;
+  font-size: 12px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid rgb(231 224 214 / 0.9);
   padding-bottom: 12px;
 }
 
 .card {
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  background: #fff;
-  padding: 32px;
-  margin-bottom: 20px;
+  border: 1px solid rgb(231 224 214 / 0.92);
+  border-radius: 24px;
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.97), rgb(249 246 240 / 0.95)),
+    #fff;
+  padding: 24px;
+  margin-bottom: 16px;
+  box-shadow: 0 24px 52px -42px rgb(15 23 42 / 0.18);
 }
 
 .cardMeta {
@@ -132,18 +153,18 @@
 }
 
 .ticker {
-  border: 1px solid #e5e7eb;
-  border-radius: 16px;
-  background: #f3f4f6;
+  border: 1px solid rgb(231 224 214 / 0.9);
+  border-radius: 999px;
+  background: rgb(248 245 239 / 0.86);
   color: #4b5563;
   font-size: 10px;
   font-family: var(--font-space), sans-serif;
-  padding: 4px 10px;
+  padding: 5px 10px;
 }
 
 .meta {
   margin: 0;
-  color: #a0a8b7;
+  color: var(--text-muted);
   font-size: 11px;
   font-family: var(--font-mono);
 }
@@ -151,22 +172,22 @@
 .card h3 {
   margin: 12px 0 14px;
   font-family: var(--font-serif-sc), var(--font-noto-sc), sans-serif;
-  font-size: clamp(28px, 3vw, 42px);
-  line-height: 1.35;
+  font-size: clamp(26px, 2.8vw, 38px);
+  line-height: 1.24;
 }
 
 .summary {
-  border: 1px solid #f3f4f6;
-  border-radius: 16px;
-  background: #f9fafb;
-  padding: 16px;
+  border: 1px solid rgb(231 224 214 / 0.86);
+  border-radius: 18px;
+  background: rgb(248 245 239 / 0.76);
+  padding: 14px 16px;
 }
 
 .summary p {
   margin: 4px 0;
-  color: #4b5563;
+  color: var(--text-secondary);
   font-size: 14px;
-  line-height: 1.65;
+  line-height: 1.68;
 }
 
 .cardBottom {
@@ -174,21 +195,23 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
 }
 
 .action {
   font-size: 14px;
-  color: #111827;
+  color: var(--text-primary);
+  font-weight: 700;
 }
 
 .tipAction {
   font-size: 12px;
-  color: #9ca3af;
+  color: var(--text-muted);
 }
 
 .emptyState {
   border: 1px dashed var(--line);
-  border-radius: 10px;
+  border-radius: 18px;
   background: #fff;
   padding: 16px;
 }
@@ -200,7 +223,7 @@
 
 .emptyState p {
   margin: 8px 0 0;
-  color: #6d7688;
+  color: var(--text-secondary);
   font-size: 13px;
 }
 
@@ -215,47 +238,17 @@
   color: var(--blue);
 }
 
-.footer {
-  border-top: 1px solid var(--line);
-  background: #fff;
-}
-
-.footerInner {
-  width: min(1280px, calc(100% - 96px));
-  margin: 0 auto;
-  height: 116px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.footerInner b {
-  display: block;
-  font-size: 18px;
-  font-family: var(--font-space), sans-serif;
-}
-
-.footerInner span {
-  display: block;
-  margin-top: 6px;
-  color: #6b7280;
-  font-size: 14px;
-}
-
-.footerInner div:last-child {
-  display: inline-flex;
-  gap: 24px;
-  color: #9ca3af;
-}
-
 @media (max-width: 1024px) {
-  .heroInner,
-  .footerInner {
-    width: min(1280px, calc(100% - 32px));
+  .heroInner {
+    width: min(1180px, calc(100% - 24px));
   }
 
   .main {
     grid-template-columns: 1fr;
     gap: 24px;
+  }
+
+  .sidebar {
+    position: static;
   }
 }

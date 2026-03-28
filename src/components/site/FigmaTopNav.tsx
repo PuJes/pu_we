@@ -23,7 +23,12 @@ type FigmaTopNavProps = {
   subscribePill?: boolean
 }
 
-export function FigmaTopNav({ active, badge, compact = true, subscribePill = true }: FigmaTopNavProps) {
+export function FigmaTopNav({
+  active,
+  badge,
+  compact = true,
+  subscribePill = true,
+}: FigmaTopNavProps) {
   return (
     <header className={`${styles.header} ${compact ? styles.compact : styles.tall}`}>
       <div className={styles.inner}>
@@ -36,13 +41,20 @@ export function FigmaTopNav({ active, badge, compact = true, subscribePill = tru
 
         <nav className={styles.nav}>
           {mainLinks.map((link) => (
-            <Link key={link.key} href={link.href} className={`${styles.link} ${active === link.key ? styles.active : ''}`}>
+            <Link
+              key={link.key}
+              href={link.href}
+              className={`${styles.link} ${active === link.key ? styles.active : ''}`}
+            >
               {link.label}
             </Link>
           ))}
         </nav>
 
-        <Link href="/subscribe" className={subscribePill ? styles.subscribePill : styles.subscribeOutline}>
+        <Link
+          href="/subscribe"
+          className={subscribePill ? styles.subscribePill : styles.subscribeOutline}
+        >
           订阅
         </Link>
       </div>

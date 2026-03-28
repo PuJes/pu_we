@@ -67,24 +67,19 @@ export function IdeaSubmitForm({ submitLabel = '提交你的创意' }: { submitL
     <>
       <form className={`${styles.panel} ${styles.ideaPanel}`} onSubmit={handleSubmit}>
         <div className={styles.ideaPanelHead}>
-          <span className={styles.ideaBadge}>Build With Me</span>
-          <p className={styles.title}>提交新 Idea</p>
-          <p className={styles.ideaLead}>一句足够真实的抱怨，往往比十页需求文档更值得开始。</p>
-        </div>
-        <div className={styles.ideaHints}>
-          <span>谁会因为它立刻受益？</span>
-          <span>哪个场景让你最想骂人？</span>
-          <span>如果它存在，你希望结果变成什么？</span>
+          <span className={styles.ideaBadge}>New submission</span>
+          <p className={styles.title}>提交你的创意</p>
+          <p className={styles.ideaLead}>写得越具体，进入看板后就越容易被理解、被投票，也越容易被推进。</p>
         </div>
         <input
           className={`${styles.input} ${styles.ideaInput}`}
-          placeholder="给它一个让人秒懂的名字"
+          placeholder="用一句话说明这是什么问题，或者你想被做出来的东西是什么"
           value={title}
           onChange={(event) => setTitle(event.target.value)}
         />
         <textarea
           className={`${styles.textarea} ${styles.ideaTextarea}`}
-          placeholder="把那个具体时刻写出来：谁在卡住、为什么痛、你希望它如何被解决。"
+          placeholder="把那个具体时刻写出来：谁在卡住、为什么痛、你理想中的结果应该是什么。"
           value={description}
           onChange={(event) => setDescription(event.target.value)}
         />

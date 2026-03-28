@@ -1,0 +1,22 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="800" rx="32" fill="#F5F7FA"/>
+  <rect x="54" y="54" width="1092" height="692" rx="28" fill="#101726"/>
+  <rect x="112" y="110" width="976" height="580" rx="24" fill="url(#paint0_linear)"/>
+  <circle cx="912" cy="212" r="146" fill="#FFFFFF" fill-opacity="0.12"/>
+  <circle cx="258" cy="618" r="220" fill="#2A56FF" fill-opacity="0.18"/>
+  <path d="M130 258H494" stroke="#FFFFFF" stroke-opacity="0.22" stroke-width="2"/>
+  <path d="M130 302H620" stroke="#FFFFFF" stroke-opacity="0.14" stroke-width="2"/>
+  <path d="M130 346H572" stroke="#FFFFFF" stroke-opacity="0.14" stroke-width="2"/>
+  <rect x="130" y="128" width="220" height="48" rx="16" fill="#FFFFFF" fill-opacity="0.1"/>
+  <text x="154" y="160" fill="#F8FAFC" font-family="Arial, sans-serif" font-size="24" font-weight="700">Digital Garden</text>
+  <text x="130" y="500" fill="#F8FAFC" font-family="Arial, sans-serif" font-size="70" font-weight="700">Family time,</text>
+  <text x="130" y="580" fill="#F8FAFC" font-family="Arial, sans-serif" font-size="70" font-weight="700">fixed on the calendar.</text>
+  <rect x="130" y="620" width="420" height="20" rx="10" fill="#FFFFFF" fill-opacity="0.44"/>
+  <rect x="130" y="654" width="326" height="20" rx="10" fill="#FFFFFF" fill-opacity="0.2"/>
+  <defs>
+    <linearGradient id="paint0_linear" x1="160" y1="132" x2="1052" y2="658" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#192235"/>
+      <stop offset="1" stop-color="#26354F"/>
+    </linearGradient>
+  </defs>
+</svg>
